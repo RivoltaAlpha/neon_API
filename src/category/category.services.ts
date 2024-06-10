@@ -2,10 +2,8 @@ import db from "../drizzle/db";
 import { TICategory, TSCategory, category } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
 
-export const getCategoryService = async (id: number): Promise<TSCategory | undefined> => {
-    return await db.query.category.findFirst({
-        where: eq(category.id, id)
-    });
+export async function  getCategoryService(id: TSCategory['id']): Promise<Array<TSCategory>> {
+    return db.select().from(category).where(eq(category.id, id));
 };
 
 export const createCategoryService = async (categoryData: TICategory) => {

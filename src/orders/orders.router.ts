@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { getOrder, createOrder, updateOrder, deleteOrder,searchOrders } from "./orders.controller";
+import { getOrder, createOrder, updateOrder, deleteOrder } from "./orders.controller";
 import { zValidator } from "@hono/zod-validator";
 import { orderSchema } from "../validator";
 
@@ -25,4 +25,4 @@ orderRouter.put("/orders/:id", updateOrder);
 // Delete an order by ID
 orderRouter.delete("/orders/:id", deleteOrder);
 
-orderRouter.get("/orders/search", searchOrders);
+// orderRouter.get("/orders/search", searchOrders);

@@ -1,12 +1,21 @@
 import { Hono, Context } from "hono";
-import { getUser,createUser,updateUser,deleteUser,getComments,getOrders } from "./contoller"
+import { getUser,createUser,updateUser,deleteUser,getComments,getOrders,listUsers } from "./contoller"
 import { zValidator } from "@hono/zod-validator";
 import { userSchema } from "../validator";
+import { authenticateUser, authenticateAdmin } from "../middleware/auth";
 
 export const userRouter = new Hono();
 
 //get a single user    api/users/1
 userRouter.get("/users/:id", getUser)
+
+//get all users      api/users
+userRouter.get("/users", authenticateAdmin, listUsers);
+
+//get a single user    api/users/1
+userRouter.get("/users/:id", authenticateUser, getUser)
+
+// quserRouter.get("/users/:id","admin",  getUser)
 
 // create a user 
 userRouter.post("/users", zValidator('json', userSchema, (result, c) => {

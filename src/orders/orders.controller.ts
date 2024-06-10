@@ -4,7 +4,6 @@ import {
   createOrderService,
   updateOrderService,
   deleteOrderService,
-  searchOrdersService
 } from "./orders.services";
 
 // Get order by ID
@@ -74,12 +73,12 @@ export const deleteOrder = async (c: Context) => {
   }
 };
 
-export const searchOrders = async (c: Context) => {
-  try {
-      const query = c.req.query();
-      const orders = await searchOrdersService(query);
-      return c.json(orders, 200);
-  } catch (error: any) {
-      return c.json({ error: error?.message }, 400);
-  }
-}
+// export const searchOrders = async (c: Context) => {
+//   try {
+//       const query = c.req.query();
+//       const orders = await searchOrdersService(query);
+//       return c.json(orders, 200);
+//   } catch (error: any) {
+//       return c.json({ error: error?.message }, 400);
+//   }
+// }

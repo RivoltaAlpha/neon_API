@@ -2,10 +2,8 @@ import db from "../drizzle/db";
 import { TIDriver, TSDriver, driver } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
 
-export const getDriverService = async (id: number): Promise<TSDriver | undefined> => {
-    return await db.query.driver.findFirst({
-        where: eq(driver.id, id)
-    });
+export async function  getDriverService(id: TSDriver['id']): Promise<Array<TSDriver>> {
+    return db.select().from(driver).where(eq(driver.id, id));
 };
 
 export const createDriverService = async (driverData: TIDriver) => {

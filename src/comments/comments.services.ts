@@ -2,10 +2,8 @@ import db from "../drizzle/db";
 import { TIComment, TSComment, comment } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
 
-export const getCommentService = async (id: number): Promise<TSComment | undefined> => {
-    return await db.query.comment.findFirst({
-        where: eq(comment.id, id)
-    });
+export async function   getCommentService (id: TSComment['id']): Promise<Array<TSComment>> {
+    return db.select().from(comment).where(eq(comment.id, id));
 };
 
 export const createCommentService = async (commentData: TIComment) => {

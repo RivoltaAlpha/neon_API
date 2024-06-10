@@ -103,7 +103,17 @@ export const addressSchema = z.object({
     delivery_instructions: z.string(),
     user_id: z.number(),
     city_id: z.number(),
-})
+});
 
+export const loginUserShema = z.object({
+    username: z.string(),
+    password: z.string(),
+});
+export const registerUserShema = z.object({
+    userId: z.number(),
+    password: z.string(),
+    username: z.string(),
+    role: z.string().optional(),
+});
 
 export type TIOrder = z.infer<typeof orderSchema>;

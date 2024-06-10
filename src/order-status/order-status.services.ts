@@ -2,11 +2,10 @@ import db from "../drizzle/db";
 import { TIOrderStatus, TSOrderStatus, order_status } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
 
-export const getOrderStatusService = async (id: number): Promise<TSOrderStatus | undefined> => {
-    return await db.query.order_status.findFirst({
-        where: eq(order_status.id, id)
-    });
+export async function  getOrderStatusService(id: TSOrderStatus['id']): Promise<Array<TSOrderStatus>> {
+    return db.select().from(order_status).where(eq(order_status.id, id));
 };
+
 
 export const createOrderStatusService = async (orderStatus: TIOrderStatus) => {
     await db.insert(order_status).values(orderStatus);

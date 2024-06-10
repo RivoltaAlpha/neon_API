@@ -2,12 +2,9 @@ import { eq } from "drizzle-orm";
 import db from "../drizzle/db";
 import { TICity, TSCity, city } from "../drizzle/schema";
 
-export const getCityService = async (id: number): Promise<TSCity | undefined> => {
-    return await db.query.city.findFirst({
-        where: eq(city.id, id)
-    })
-}
-
+export async function  getCityService(id: TSCity['id']): Promise<Array<TSCity>> {
+    return db.select().from(city).where(eq(city.id, id));
+};
 export const createCityService = async (cityData: TICity) => {
     await db.insert(city).values(cityData)
     return "City created successfully";

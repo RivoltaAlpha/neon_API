@@ -13,7 +13,7 @@ export const getRestaurantOwner = async (c: Context) => {
         const owner_id = parseInt(c.req.param("owner_id"));
         if (isNaN(restaurant_id) || isNaN(owner_id)) return c.text("Invalid ID", 400);
 
-        const restaurantOwner = await getRestaurantOwnerService(restaurant_id, owner_id);
+        const restaurantOwner = await getRestaurantOwnerService(owner_id);
         if (restaurantOwner === null) {
             return c.text("Restaurant Owner relationship not found", 404);
         }

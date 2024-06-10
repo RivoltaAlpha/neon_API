@@ -2,10 +2,8 @@ import db from "../drizzle/db";
 import { TIOrderMenuItem, TSOrderMenuItem, order_menu_item } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
 
-export const getOrderMenuItemService = async (id: number): Promise<TSOrderMenuItem | undefined> => {
-    return await db.query.order_menu_item.findFirst({
-        where: eq(order_menu_item.id, id)
-    });
+export async function  getOrderMenuItemService(id: TSOrderMenuItem['id']): Promise<Array<TSOrderMenuItem>> {
+    return db.select().from(order_menu_item).where(eq(order_menu_item.id, id));
 };
 
 export const createOrderMenuItemService = async (orderMenuItem: TIOrderMenuItem) => {

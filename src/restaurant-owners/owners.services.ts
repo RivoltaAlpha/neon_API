@@ -1,11 +1,9 @@
-import db from "../drizzle/db";
+import  {db}  from '../drizzle/db';
 import { TIRestaurantOwner, TSRestaurantOwner, restaurant_owner } from "../drizzle/schema";
 import { and, eq } from "drizzle-orm";
 
-export const getRestaurantOwnerService = async (restaurant_id: number, owner_id: number): Promise<TSRestaurantOwner | undefined> => {
-    return await db.query.restaurant_owner.findFirst({
-        where: and(eq(restaurant_owner.restaurant_id, restaurant_id), eq(restaurant_owner.owner_id, owner_id))
-    });
+export async function getRestaurantOwnerService(id: TSRestaurantOwner['owner_id']): Promise<Array<TSRestaurantOwner>> {
+    return db.select().from(restaurant_owner).where(eq(restaurant_owner.owner_id, id));
 };
 
 export const createRestaurantOwnerService = async (restaurantOwnerData: TIRestaurantOwner) => {

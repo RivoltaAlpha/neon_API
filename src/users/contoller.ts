@@ -1,4 +1,5 @@
 import { Context } from "hono";
+import bycrpt from 'bcrypt';
 import {
   getUserById,
   createUserService,
@@ -7,7 +8,25 @@ import {
   getUserComments,
   getUserOrders,
   getUserOwnedRestaurants,
+  usersService,
 } from "./services";
+
+export const listUsers = async (c: Context) => {
+  try {
+      //limit the number of users to be returned
+
+      const limit = Number(c.req.query('limit'))
+
+      const data = await usersService(limit);
+      if (data == null || data.length == 0) {
+          return c.text("User not found", 404)
+      }
+      return c.json(data, 200);
+  } catch (error: any) {
+      return c.json({ error: error?.message }, 400)
+  }
+}
+
 
 //search user
 export const getUser = async (c: Context) => {
@@ -31,6 +50,9 @@ export const getUser = async (c: Context) => {
 export const createUser = async (c: Context) => {
   try {
     const user = await c.req.json();
+    const pass = user.password;
+    const hashedPassword = await bycrpt.hash(pass, 10);
+    user.password = hashedPassword;
     const createdUser = await createUserService(user);
 
     if (!createdUser) return c.text("User not created", 404);

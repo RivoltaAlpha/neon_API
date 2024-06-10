@@ -1,6 +1,41 @@
+
+###
+GET http://localhost:8000/api/timeout
+
 #users
 ###
 GET  http://localhost:8000/api/users/1
+
+###
+GET  http://localhost:8000/api/users
+
+###
+POST  http://localhost:8000/api/auth/register
+Content-Type: application/json
+
+{
+    "userId":4,
+    "password": "pass",
+    "username": "Alvin",
+    "role": "admin"
+}
+
+###
+
+POST  http://localhost:8000/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "Alvin",
+    "password": "pass"
+}
+
+###
+GET http://localhost:8000/api/users/
+Authorization:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBbHZpbiIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTcxODAzNzI0M30.GVNxfqa53z_BtpHwjX_ptcLptQ_2qR8dyWBkYZO5L68
+
+###
+GET http://localhost:8000/api/users?limit=4
 
 ###
 GET  http://localhost:8000/api/user/1/orders

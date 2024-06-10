@@ -1,6 +1,15 @@
-import { db } from '../drizzle/db';
+import  db  from '../drizzle/db';
 import { eq } from 'drizzle-orm';
 import { TIUser, TSUser,TIOrder,TSOrder, TIComment, TSComment, TIRestaurantOwner, TSRestaurantOwner, users, comment,orders, restaurant_owner } from "../drizzle/schema";
+
+export const usersService = async (limit?: number): Promise<TSUser[] | null> => {
+    if (limit) {
+        return await db.query.users.findMany({
+            limit: limit
+        });
+    }
+    return await db.query.users.findMany();
+};
 
 export async function getUserById(id: TSUser['id']): Promise<Array<TSUser>> {
     return db.select().from(users).where(eq(users.id, id));
@@ -21,14 +30,14 @@ export async function deleteUserService(id: number) {
     return "User deleted successfully";
 }
 
-export async function getUserOrders(id: TSUser['id']): Promise<any[]> {
+export async function getUserOrders(id: TSOrder['id']): Promise<any[]> {
     return db.select().from(orders).where(eq(orders.user_id, id));
 }
 
-export async function getUserComments(id: TSUser['id']): Promise<any[]> {
+export async function getUserComments(id: TSComment['id']): Promise<any[]> {
     return db.select().from(comment).where(eq(comment.user_id, id));
 }
 
-export async function getUserOwnedRestaurants(id: TSUser['id']): Promise<any[]> {
+export async function getUserOwnedRestaurants(id: TSRestaurantOwner['owner_id']): Promise<any[]> {
     return db.select().from(restaurant_owner).where(eq(restaurant_owner.owner_id, id));
 }

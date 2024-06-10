@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import {db} from "../drizzle/db";
+import db from "../drizzle/db";
 import { TIOrder, TSOrder, orders } from "../drizzle/schema";
 
 export async function getOrderService(id: TSOrder['id']): Promise<Array<TSOrder>> {
@@ -22,7 +22,7 @@ export const deleteOrderService = async (id: number) => {
     return "Order deleted successfully";
 }
 
-export async function searchOrdersService = async (orderData :TIOrder) => {
+// export async function searchOrdersService = async (orderData :TIOrder) => {
 
-}
+// }
 

@@ -1,12 +1,10 @@
 import { eq } from "drizzle-orm";
-import db from "../drizzle/db";
+import  db  from '../drizzle/db';
 import { TIRestaurant,TSRestaurant, restaurant } from "../drizzle/schema";
 
 // Get a single restaurant by ID
-export const getRestaurantService = async (id: number): Promise<TSRestaurant | undefined> => {
-    return await db.query.restaurant.findFirst({
-        where: eq(restaurant.id, id)
-    });
+export async function  getRestaurantService(id: TSRestaurant['id']): Promise<Array<TSRestaurant>> {
+    return db.select().from(restaurant).where(eq(restaurant.id, id));
 };
 
 // Create a new restaurant

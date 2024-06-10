@@ -1,4 +1,4 @@
-import { pgTable, serial, text, integer, boolean, numeric, timestamp, primaryKey, foreignKey } from 'drizzle-orm/pg-core';
+import { pgTable, serial,varchar, text, integer, boolean, numeric, timestamp, primaryKey, foreignKey,pgEnum } from 'drizzle-orm/pg-core';
 import {relations} from 'drizzle-orm';
 import { Many } from 'drizzle-orm';
 
@@ -83,8 +83,8 @@ export const categoryRelations = relations(category, ({ many }) => ({
 export const orders = pgTable('orders', {
     id: serial('id').primaryKey(),
     restaurant_id: integer('restaurant_id').notNull().references(() => restaurant.id, { onDelete: "cascade" }),
-    estimated_delivery_time: timestamp('estimated_delivery_time').notNull(),
-    actual_delivery_time: timestamp('actual_delivery_time'),
+    estimated_delivery_time: timestamp('estimated_delivery_time').defaultNow().notNull(),
+    actual_delivery_time: timestamp('actual_delivery_time').defaultNow(),
     delivery_address_id: integer('delivery_address_id').notNull(),
     user_id: integer('user_id').notNull().references(() => users.id, { onDelete: "cascade" }),
     driver_id: integer('driver_id').notNull().references(() => driver.id, { onDelete: "cascade" }),
@@ -213,6 +213,24 @@ export const usersRelations = relations(users, ({ many }) => ({
     drivers: many(driver),
 }));
 
+export const roleEnum = pgEnum("role", ["admin", "user"])
+
+// The auth_user table schema
+export const authUser = pgTable('auth_user', {
+    id: serial("id").primaryKey(),
+    userId: integer("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    password: varchar("password", { length: 100 }),
+    username: varchar("username", { length: 100 }),
+    role: roleEnum("role").default("user")
+});
+// auth relations
+export const authUserRelations = relations(authUser, ({ one }) => ({
+    user: one(users, {
+        fields: [authUser.userId],
+        references: [users.id],
+    })
+}));
+
 // Comment table
 export const comment = pgTable('comment', {
     id: serial('id').primaryKey(),
@@ -318,3 +336,5 @@ export type TIRestaurantOwner = typeof restaurant_owner.$inferInsert;
 export type TSRestaurantOwner = typeof restaurant_owner.$inferSelect;
 export type TICategory = typeof category.$inferInsert;
 export type TSCategory = typeof  category.$inferSelect;
+export type TIAuthUser = typeof authUser.$inferInsert;
+export type TSAuthUser = typeof authUser.$inferSelect;

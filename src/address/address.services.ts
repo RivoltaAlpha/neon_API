@@ -2,10 +2,8 @@ import db from "../drizzle/db";
 import { TIAddress, TSAddress, address } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
 
-export const getAddressService = async (id: number): Promise<TSAddress | undefined> => {
-    return await db.query.address.findFirst({
-        where: eq(address.id, id)
-    });
+export async function  getAddressService(id: TSAddress['id']): Promise<Array<TSAddress>> {
+    return db.select().from(address).where(eq(address.id, id));
 };
 
 export const createAddressService = async (addressData: TIAddress) => {

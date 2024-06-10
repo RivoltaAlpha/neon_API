@@ -1,11 +1,9 @@
 import { eq } from "drizzle-orm";
-import db from "../drizzle/db";
+import  db  from '../drizzle/db';
 import { TIStatus, TSStatus, status_catalog} from "../drizzle/schema";
 
-export const getServiceCatalog = async (id: number): Promise<TSStatus | undefined> => {
-    return await db.query.status_catalog.findFirst({
-        where: eq(status_catalog.id, id)
-    });
+export async function getServiceCatalog(id: TSStatus['id']): Promise<Array<TSStatus>> {
+    return db.select().from(status_catalog).where(eq(status_catalog.id, id));
 };
 
 export const createServiceCatalog = async (data:TIStatus) => {

@@ -1,6 +1,6 @@
+import "dotenv/config";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
-import "dotenv/config";
 import { logger } from "hono/logger";
 import { csrf } from "hono/csrf";
 import { trimTrailingSlash } from "hono/trailing-slash";
@@ -8,6 +8,7 @@ import { timeout } from "hono/timeout";
 import { HTTPException } from "hono/http-exception";
 import { prometheus } from "@hono/prometheus";
 
+import {authRouter,} from "./auth/auth.router";
 import { userRouter } from "./users/routers";
 import { restaurantRouter } from "./restaurants/restaurant.router";
 import { stateRouter } from "./state/state.routers";
@@ -46,7 +47,7 @@ app.get("/timeout", async (c) => {
 app.get("/metrics", printMetrics);
 
 // custom routes
-
+app.route("/auth", authRouter);
 app.route("/", userRouter);
 app.route("/", restaurantRouter);
 app.route("/", stateRouter);
@@ -61,6 +62,7 @@ app.route("/", statusRouter);
 app.route("/", commentRouter);
 app.route("/", categoryRouter);
 app.route("/", ownersRouter);
+
 
 serve({
   fetch: app.fetch,
