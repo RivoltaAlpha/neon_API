@@ -2,6 +2,15 @@ import { eq } from "drizzle-orm";
 import db from "../drizzle/db";
 import { TICity, TSCity, city } from "../drizzle/schema";
 
+export const listCityService = async (limit?: number): Promise<TSCity[] | null> => {
+    if (limit) {
+        return await db.query.city.findMany({
+            limit: limit
+        });
+    }
+    return await db.query.city.findMany();
+};
+
 export async function  getCityService(id: TSCity['id']): Promise<Array<TSCity>> {
     return db.select().from(city).where(eq(city.id, id));
 };

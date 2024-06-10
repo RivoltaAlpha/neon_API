@@ -14,9 +14,9 @@ POST  http://localhost:8000/api/auth/register
 Content-Type: application/json
 
 {
-    "userId":4,
+    "userId":5,
     "password": "pass",
-    "username": "Alvin",
+    "username": "Tyla",
     "role": "admin"
 }
 
@@ -26,7 +26,7 @@ POST  http://localhost:8000/api/auth/login
 Content-Type: application/json
 
 {
-    "username": "Alvin",
+    "username": "Tyla",
     "password": "pass"
 }
 
@@ -133,6 +133,11 @@ Content-Type: application/json
 GET  http://localhost:8000/api/states/1
 
 ###
+GET http://localhost:8000/api/states/
+Authorization:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJUeWxhIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzE4MDU3MTI2fQ.nEj1CCZc9It6bePKQKnnHhCWr2UxUwSyI2pWdUF1dq8
+
+
+###
 POST http://localhost:8000/api/states
 Content-Type: application/json
 
@@ -165,6 +170,10 @@ Content-Type: application/json
 # cities
 ###
 GET  http://localhost:8000/api/cities/1
+
+###
+GET http://localhost:8000/api/cities/
+Authorization:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJUeWxhIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzE4MDU3MTI2fQ.nEj1CCZc9It6bePKQKnnHhCWr2UxUwSyI2pWdUF1dq8
 
 
 

@@ -1,12 +1,16 @@
 import { Hono } from "hono";
-import { getState, createState, updateState, deleteState } from "./state.controller";
+import { getState, createState, updateState, deleteState, listStates } from "./state.controller";
 import { zValidator } from "@hono/zod-validator";
 import { stateSchema } from "../validator";
+import { authenticateUser, authenticateAdmin } from "../middleware/auth";
+
 
 export const stateRouter = new Hono();
 
 // Get a single state by ID: api/states/1
 stateRouter.get("/states/:id", getState);
+
+stateRouter.get("/states", authenticateAdmin, listStates);  
 
 // Create a state
 stateRouter.post(
