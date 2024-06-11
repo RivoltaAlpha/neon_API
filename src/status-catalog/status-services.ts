@@ -2,6 +2,15 @@ import { eq } from "drizzle-orm";
 import  db  from '../drizzle/db';
 import { TIStatus, TSStatus, status_catalog} from "../drizzle/schema";
 
+export const listScService = async (limit?: number): Promise<TSStatus[] | null> => {
+    if (limit) {
+        return await db.query.status_catalog.findMany({
+            limit: limit
+        });
+    }
+    return await db.query.status_catalog.findMany();
+};
+
 export async function getServiceCatalog(id: TSStatus['id']): Promise<Array<TSStatus>> {
     return db.select().from(status_catalog).where(eq(status_catalog.id, id));
 };

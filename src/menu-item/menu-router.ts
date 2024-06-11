@@ -2,13 +2,12 @@ import { Hono } from "hono";
 import { getMenuItem, createMenuItem, updateMenuItem, deleteMenuItem } from "./menu-controller";
 import { zValidator } from "@hono/zod-validator";
 import { menu_itemSchema } from "../validator";
-import { authenticateUser, authenticateAdmin } from "../middleware/auth";
+import { authenticateUser, authenticateBoth, authenticateAdmin } from "../middleware/auth";
 
 export const menuItemRouter = new Hono();
-menuItemRouter.use('*', authenticateAdmin);
 
 // Get a single MenuItem
-menuItemRouter.get("/menu_items/:id", authenticateUser, getMenuItem);
+menuItemRouter.get("/menu_items/:id", authenticateBoth, getMenuItem);
 
 // Create a MenuItem
 menuItemRouter.post("/menu_items",
@@ -17,10 +16,10 @@ menuItemRouter.post("/menu_items",
           return c.json(result.error, 400);
         }
       }),
-    createMenuItem);
+    authenticateAdmin ,createMenuItem);
 
 // Update a MenuItem
-menuItemRouter.put("/menu_items/:id", updateMenuItem);
+menuItemRouter.put("/menu_items/:id", authenticateAdmin, updateMenuItem);
 
 // Delete a MenuItem
-menuItemRouter.delete("/menu_items/:id", deleteMenuItem);
+menuItemRouter.delete("/menu_items/:id", authenticateAdmin, deleteMenuItem)

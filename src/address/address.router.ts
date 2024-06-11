@@ -7,14 +7,12 @@ import {
 } from "./address.contoller";
 import { zValidator } from "@hono/zod-validator";
 import { addressSchema } from "../validator";
-import { authenticateUser, authenticateAdmin } from "../middleware/auth";
+import { authenticateBoth, authenticateAdmin } from "../middleware/auth";
 
 export const addressRouter = new Hono();
 
-addressRouter.use('*', authenticateAdmin)
-
 // Get a single Address
-addressRouter.get("/addresses/:id", authenticateUser, getAddress);
+addressRouter.get("/addresses/:id", authenticateBoth, getAddress);
 
 // Create an Address
 addressRouter.post(
@@ -24,11 +22,11 @@ addressRouter.post(
       return c.json(result.error, 400);
     }
   }),
-  createAddress
+  authenticateAdmin, createAddress
 );
 
 // Update an Address
-addressRouter.put("/addresses/:id", updateAddress);
+addressRouter.put("/addresses/:id", authenticateAdmin, updateAddress);
 
 // Delete an Address
-addressRouter.delete("/addresses/:id", deleteAddress);
+addressRouter.delete("/addresses/:id", authenticateAdmin, deleteAddress);

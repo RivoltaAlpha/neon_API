@@ -1,5 +1,22 @@
 import { Context } from "hono";
-import { getServiceCatalog, updateServiceCatalog, deleteStatusCatalog, createServiceCatalog} from "./status-services"
+import { listScService,getServiceCatalog, updateServiceCatalog, deleteStatusCatalog, createServiceCatalog} from "./status-services"
+
+export const listSC = async (c: Context) => {
+  try {
+      //limit the number of users to be returned
+
+      const limit = Number(c.req.query('limit'))
+
+      const data = await listScService(limit);
+      if (data == null || data.length == 0) {
+          return c.text("User not found", 404)
+      }
+      return c.json(data, 200);
+  } catch (error: any) {
+      return c.json({ error: error?.message }, 400)
+  }
+}
+
 
 // Get state by ID
 export const getService = async (c: Context) => {

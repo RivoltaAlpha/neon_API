@@ -2,17 +2,13 @@ import { Hono } from "hono";
 import { getRestaurantOwner, createRestaurantOwner, updateRestaurantOwner, deleteRestaurantOwner } from "./owners.controller";
 import { zValidator } from "@hono/zod-validator";
 import { ownersSchema} from "../validator";
-import { authenticateUser, authenticateAdmin } from "../middleware/auth";
+import { authenticateAdmin, authenticateBoth } from "../middleware/auth";
 
 
 export const ownersRouter = new Hono();
 
-
-// Apply authenticateUser middleware to all routes
-ownersRouter.use('*', authenticateAdmin);
-
 // Get a single RestaurantOwner relationship
-ownersRouter.get("/restaurant_owners/:restaurant_id/:owner_id", authenticateUser, getRestaurantOwner);
+ownersRouter.get("/restaurant_owners/:restaurant_id/:owner_id", authenticateBoth, getRestaurantOwner);
 
 // Create a RestaurantOwner relationship
 ownersRouter.post("/restaurant_owners",
@@ -21,10 +17,10 @@ ownersRouter.post("/restaurant_owners",
             return c.json(result.error, 400);
         }
     }),
-    createRestaurantOwner);
+    authenticateAdmin,createRestaurantOwner);
 
 // Update a RestaurantOwner relationship
-ownersRouter.put("/restaurant_owners/:restaurant_id/:owner_id", updateRestaurantOwner);
+ownersRouter.put("/restaurant_owners/:restaurant_id/:owner_id",authenticateAdmin, updateRestaurantOwner);
 
 // Delete a RestaurantOwner relationship
-ownersRouter.delete("/restaurant_owners/:restaurant_id/:owner_id", deleteRestaurantOwner);
+ownersRouter.delete("/restaurant_owners/:restaurant_id/:owner_id",authenticateAdmin, deleteRestaurantOwner);

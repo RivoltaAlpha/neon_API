@@ -2,14 +2,12 @@ import { Hono } from "hono";
 import { getComment, createComment, updateComment, deleteComment } from "./comments.contoller";
 import { zValidator } from "@hono/zod-validator";
 import { commentSchema} from "../validator";
-import { authenticateUser, authenticateAdmin } from "../middleware/auth";
+import { authenticateBoth, authenticateAdmin } from "../middleware/auth";
 
 export const commentRouter = new Hono();
-// auths
-commentRouter.use('*', authenticateAdmin);
 
 // Get a single Comment
-commentRouter.get("/comments/:id", authenticateUser, getComment);
+commentRouter.get("/comments/:id", authenticateBoth, getComment);
 
 // Create a Comment
 commentRouter.post("/comments",
@@ -18,10 +16,10 @@ commentRouter.post("/comments",
           return c.json(result.error, 400);
         }
       }),
-      authenticateUser, createComment);
+      authenticateBoth, createComment);
 
 // Update a Comment
-commentRouter.put("/comments/:id", authenticateUser, updateComment);
+commentRouter.put("/comments/:id", authenticateBoth, updateComment);
 
 // Delete a Comment
-commentRouter.delete("/comments/:id", authenticateUser, deleteComment);
+commentRouter.delete("/comments/:id", authenticateBoth, deleteComment);
