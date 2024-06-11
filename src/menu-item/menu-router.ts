@@ -2,11 +2,13 @@ import { Hono } from "hono";
 import { getMenuItem, createMenuItem, updateMenuItem, deleteMenuItem } from "./menu-controller";
 import { zValidator } from "@hono/zod-validator";
 import { menu_itemSchema } from "../validator";
+import { authenticateUser, authenticateAdmin } from "../middleware/auth";
 
 export const menuItemRouter = new Hono();
+menuItemRouter.use('*', authenticateAdmin);
 
 // Get a single MenuItem
-menuItemRouter.get("/menu_items/:id", getMenuItem);
+menuItemRouter.get("/menu_items/:id", authenticateUser, getMenuItem);
 
 // Create a MenuItem
 menuItemRouter.post("/menu_items",

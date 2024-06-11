@@ -6,10 +6,10 @@ import { authenticateUser, authenticateAdmin } from "../middleware/auth";
 
 export const orderRouter = new Hono();
 
+orderRouter.use('*', authenticateAdmin)
+
 // Get a single order by ID: api/orders/1
 orderRouter.get("/orders/:id", authenticateUser, getOrder);
-
-orderRouter.use('*', authenticateAdmin)
 
 // Create an order
 orderRouter.post(

@@ -2,12 +2,12 @@ import { Hono } from "hono";
 import { getCity, createCity, updateCity, deleteCity, listCity } from "./city.controller";
 import { zValidator } from "@hono/zod-validator";
 import { citySchema } from "../validator";
-import { authenticateAdmin } from "../middleware/auth";
+import { authenticateUser, authenticateAdmin } from "../middleware/auth";
 
 export const cityRouter = new Hono();
 
 // Get a single city by ID: api/cities/1
-cityRouter.get("/cities/:id", getCity);
+cityRouter.get("/cities/:id", authenticateUser, getCity);
 
 cityRouter.get("/cities", authenticateAdmin, listCity);
 

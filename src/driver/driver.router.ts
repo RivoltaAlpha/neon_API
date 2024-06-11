@@ -2,11 +2,13 @@ import { Hono } from "hono";
 import { getDriver, createDriver, updateDriver, deleteDriver } from "./driver.controller";
 import { zValidator } from "@hono/zod-validator";
 import { driverSchema } from "../validator";
+import { authenticateUser, authenticateAdmin } from "../middleware/auth";
 
 export const driverRouter = new Hono();
+driverRouter.use('*', authenticateAdmin);
 
 // Get a single Driver
-driverRouter.get("/drivers/:id", getDriver);
+driverRouter.get("/drivers/:id", authenticateUser, getDriver);
 
 // Create a Driver
 driverRouter.post("/drivers",
