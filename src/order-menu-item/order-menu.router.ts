@@ -5,6 +5,8 @@ import { order_menu_itemSchema } from "../validator";
 import { authenticateBoth, authenticateAdmin } from "../middleware/auth";
 
 export const orderMenuItemRouter = new Hono();
+//list all
+orderMenuItemRouter.get('/order_menu_items', authenticateAdmin, getOrderMenuItem);
 
 // Get a single OrderMenuItem
 orderMenuItemRouter.get("/order_menu_items/:id",authenticateBoth, getOrderMenuItem);

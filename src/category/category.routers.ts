@@ -1,10 +1,12 @@
 import { Hono } from "hono";
-import { getCategory, createCategory, updateCategory, deleteCategory } from "./category.controller";
+import { getCategory, createCategory, updateCategory, deleteCategory,listCategories } from "./category.controller";
 import { zValidator } from "@hono/zod-validator";
 import { categorySchema} from "../validator";
 import { authenticateBoth, authenticateAdmin } from "../middleware/auth";
 
 export const categoryRouter = new Hono();
+// list all categories
+categoryRouter.get('/categories', authenticateBoth, listCategories);
 
 // Get a single Category
 categoryRouter.get("/categories/:id", authenticateBoth, getCategory);

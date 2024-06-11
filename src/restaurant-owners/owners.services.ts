@@ -2,6 +2,15 @@ import  {db}  from '../drizzle/db';
 import { TIRestaurantOwner, TSRestaurantOwner, restaurant_owner } from "../drizzle/schema";
 import { and, eq } from "drizzle-orm";
 
+export const listService = async (limit?: number): Promise<TSRestaurantOwner[] | null> => {
+    if (limit) {
+        return await db.query.restaurant_owner.findMany({
+            limit: limit
+        });
+    }
+    return await db.query.restaurant_owner.findMany();
+};
+
 export async function getRestaurantOwnerService(id: TSRestaurantOwner['owner_id']): Promise<Array<TSRestaurantOwner>> {
     return db.select().from(restaurant_owner).where(eq(restaurant_owner.owner_id, id));
 };

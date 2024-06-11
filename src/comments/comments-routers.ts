@@ -1,10 +1,12 @@
 import { Hono } from "hono";
-import { getComment, createComment, updateComment, deleteComment } from "./comments.contoller";
+import { getComment, createComment, updateComment, deleteComment,listComments } from "./comments.contoller";
 import { zValidator } from "@hono/zod-validator";
 import { commentSchema} from "../validator";
 import { authenticateBoth, authenticateAdmin } from "../middleware/auth";
 
 export const commentRouter = new Hono();
+//list all 
+commentRouter.get('/comments', listComments);
 
 // Get a single Comment
 commentRouter.get("/comments/:id", authenticateBoth, getComment);

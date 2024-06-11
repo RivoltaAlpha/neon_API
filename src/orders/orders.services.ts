@@ -2,6 +2,16 @@ import { eq } from "drizzle-orm";
 import db from "../drizzle/db";
 import { TIOrder, TSOrder, orders } from "../drizzle/schema";
 
+export const listService = async (limit?: number): Promise<TSOrder[] | null> => {
+    if (limit) {
+        return await db.query.orders.findMany({
+            limit: limit
+        });
+    }
+    return await db.query.orders.findMany();
+};
+
+
 export async function getOrderService(id: TSOrder['id']): Promise<Array<TSOrder>> {
     return db.select().from(orders).where(eq(orders.id, id));
 }

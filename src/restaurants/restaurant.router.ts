@@ -1,13 +1,15 @@
 import { Hono } from "hono";
-import { getRestaurant, createRestaurant, updateRestaurant, deleteRestaurant } from "./restaurant.controller";
+import { listRestaurants,getRestaurant, createRestaurant, updateRestaurant, deleteRestaurant } from "./restaurant.controller";
 import { zValidator } from "@hono/zod-validator";
 import { restaurantSchema } from "../validator"; // Ensure you have a validator schema for restaurant data
-import { authenticateUser, authenticateAdmin, authenticateBoth } from "../middleware/auth";
+import { authenticateAdmin, authenticateBoth } from "../middleware/auth";
 
 export const restaurantRouter = new Hono();
 
 // Get a single restaurant by ID: api/restaurants/1
 restaurantRouter.get("/restaurants/:id", authenticateBoth, getRestaurant);
+// list all
+restaurantRouter.get("/restaurants", authenticateBoth, listRestaurants);
 
 // Create a restaurant with validation
 restaurantRouter.post(

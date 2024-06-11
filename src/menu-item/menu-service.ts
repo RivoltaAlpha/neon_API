@@ -2,6 +2,15 @@ import db from "../drizzle/db";
 import { TIMenuItem, TSMenuItem, menu_item } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
 
+export const listService = async (limit?: number): Promise<TSMenuItem[] | null> => {
+    if (limit) {
+        return await db.query.menu_item.findMany({
+            limit: limit
+        });
+    }
+    return await db.query.menu_item.findMany();
+};
+
 export async function  getMenuItemService(id: TSMenuItem['id']): Promise<Array<TSMenuItem>> {
     return db.select().from(menu_item).where(eq(menu_item.id, id));
 };

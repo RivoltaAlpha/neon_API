@@ -1,10 +1,12 @@
 import { Hono } from "hono";
-import { getOrderStatus, createOrderStatus, updateOrderStatus, deleteOrderStatus } from "./order-status.controller";
+import { getOrderStatus, createOrderStatus, updateOrderStatus, deleteOrderStatus,listOrderStatus } from "./order-status.controller";
 import { zValidator } from "@hono/zod-validator";
 import { order_statusSchema } from "../validator";
-import { authenticateUser, authenticateAdmin, authenticateBoth } from "../middleware/auth";
+import { authenticateAdmin, authenticateBoth } from "../middleware/auth";
 
 export const orderStatusRouter = new Hono();
+//list  all
+orderStatusRouter.get('/order_statuses', authenticateBoth, listOrderStatus);
 
 // Get a single OrderStatus
 orderStatusRouter.get("/order_statuses/:id", authenticateBoth, getOrderStatus);

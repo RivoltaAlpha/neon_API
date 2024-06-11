@@ -2,6 +2,15 @@ import db from "../drizzle/db";
 import { TIDriver, TSDriver, driver } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
 
+export const listService = async (limit?: number): Promise<TSDriver[] | null> => {
+    if (limit) {
+        return await db.query.driver.findMany({
+            limit: limit
+        });
+    }
+    return await db.query.driver.findMany();
+};
+
 export async function  getDriverService(id: TSDriver['id']): Promise<Array<TSDriver>> {
     return db.select().from(driver).where(eq(driver.id, id));
 };

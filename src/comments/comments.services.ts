@@ -2,6 +2,15 @@ import db from "../drizzle/db";
 import { TIComment, TSComment, comment } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
 
+export const listService = async (limit?: number): Promise<TSComment[] | null> => {
+    if (limit) {
+        return await db.query.comment.findMany({
+            limit: limit
+        });
+    }
+    return await db.query.comment.findMany();
+};
+
 export async function   getCommentService (id: TSComment['id']): Promise<Array<TSComment>> {
     return db.select().from(comment).where(eq(comment.id, id));
 };

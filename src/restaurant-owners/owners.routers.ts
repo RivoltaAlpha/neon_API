@@ -6,6 +6,8 @@ import { authenticateAdmin, authenticateBoth } from "../middleware/auth";
 
 
 export const ownersRouter = new Hono();
+// list all owners
+ownersRouter.get('/owners', authenticateBoth, getRestaurantOwner);
 
 // Get a single RestaurantOwner relationship
 ownersRouter.get("/restaurant_owners/:restaurant_id/:owner_id", authenticateBoth, getRestaurantOwner);

@@ -2,6 +2,15 @@ import db from "../drizzle/db";
 import { TICategory, TSCategory, category } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
 
+export const listService = async (limit?: number): Promise<TSCategory[] | null> => {
+    if (limit) {
+        return await db.query.category.findMany({
+            limit: limit
+        });
+    }
+    return await db.query.category.findMany();
+};
+
 export async function  getCategoryService(id: TSCategory['id']): Promise<Array<TSCategory>> {
     return db.select().from(category).where(eq(category.id, id));
 };
