@@ -7,10 +7,14 @@ import { authenticateUser, authenticateAdmin } from "../middleware/auth";
 
 export const stateRouter = new Hono();
 
-// Get a single state by ID: api/states/1
-stateRouter.get("/states/:id", getState);
+// Apply authenticateUser middleware to all routes
+stateRouter.use('*', authenticateAdmin);
 
-stateRouter.get("/states", authenticateAdmin, listStates);  
+
+// Get a single state by ID: api/states/1
+stateRouter.get("/states/:id", authenticateUser, getState);
+
+stateRouter.get("/states", authenticateUser, listStates);  
 
 // Create a state
 stateRouter.post(

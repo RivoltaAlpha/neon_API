@@ -6,14 +6,14 @@ import { authenticateUser, authenticateAdmin } from "../middleware/auth";
 
 export const userRouter = new Hono();
 
+// Apply authenticateUser middleware to all routes
+userRouter.use('*', authenticateAdmin);
+
 //get a single user    api/users/1
-userRouter.get("/users/:id", getUser)
+userRouter.get("/users/:id",authenticateUser, getUser)
 
 //get all users      api/users
-userRouter.get("/users", authenticateAdmin, listUsers);
-
-//get a single user    api/users/1
-userRouter.get("/users/:id", authenticateUser, getUser)
+userRouter.get("/users", listUsers);
 
 // quserRouter.get("/users/:id","admin",  getUser)
 
@@ -26,7 +26,7 @@ userRouter.post("/users", zValidator('json', userSchema, (result, c) => {
 
 
 // PUT /user/:id
-userRouter.put("/user/:id", async (c: Context) => updateUser(c));
+userRouter.put("/user/:id",authenticateUser,async (c: Context) => updateUser(c));
 
 // DELETE /user/:id
 userRouter.delete("/user/:id", async (c: Context) => deleteUser(c));

@@ -2,11 +2,14 @@ import { Hono } from "hono";
 import { getOrder, createOrder, updateOrder, deleteOrder } from "./orders.controller";
 import { zValidator } from "@hono/zod-validator";
 import { orderSchema } from "../validator";
+import { authenticateUser, authenticateAdmin } from "../middleware/auth";
 
 export const orderRouter = new Hono();
 
 // Get a single order by ID: api/orders/1
-orderRouter.get("/orders/:id", getOrder);
+orderRouter.get("/orders/:id", authenticateUser, getOrder);
+
+orderRouter.use('*', authenticateAdmin)
 
 // Create an order
 orderRouter.post(
@@ -16,7 +19,7 @@ orderRouter.post(
       return c.json(result.error, 400);
     }
   }),
-  createOrder
+  authenticateUser, createOrder
 );
 
 // Update an order by ID

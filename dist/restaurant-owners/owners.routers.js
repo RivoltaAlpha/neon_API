@@ -5,9 +5,12 @@ const hono_1 = require("hono");
 const owners_controller_1 = require("./owners.controller");
 const zod_validator_1 = require("@hono/zod-validator");
 const validator_1 = require("../validator");
+const auth_1 = require("../middleware/auth");
 exports.ownersRouter = new hono_1.Hono();
+// Apply authenticateUser middleware to all routes
+exports.ownersRouter.use('*', auth_1.authenticateAdmin);
 // Get a single RestaurantOwner relationship
-exports.ownersRouter.get("/restaurant_owners/:restaurant_id/:owner_id", owners_controller_1.getRestaurantOwner);
+exports.ownersRouter.get("/restaurant_owners/:restaurant_id/:owner_id", auth_1.authenticateUser, owners_controller_1.getRestaurantOwner);
 // Create a RestaurantOwner relationship
 exports.ownersRouter.post("/restaurant_owners", (0, zod_validator_1.zValidator)("json", validator_1.ownersSchema, (result, c) => {
     if (!result.success) {

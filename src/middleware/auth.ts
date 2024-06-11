@@ -22,6 +22,7 @@ export const authMiddleware = async (c: Context, next: Next, requiredRole: strin
     if (!decoded) return c.json({ error: 'Invalid token' }, 401);
 
     // check roles 'Forbidden😏😏😏😏😏'
+    // Authorization
     if (decoded.role !== requiredRole) return c.json({ error: "'Forbidden😏😭😭😭😭😭'" }, 401);
 
     return next();

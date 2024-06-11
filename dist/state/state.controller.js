@@ -1,7 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteState = exports.updateState = exports.createState = exports.getState = void 0;
+exports.deleteState = exports.updateState = exports.createState = exports.getState = exports.listStates = void 0;
 const state_services_1 = require("./state.services");
+const listStates = async (c) => {
+    try {
+        //limit the number of users to be returned
+        const limit = Number(c.req.query('limit'));
+        const data = await (0, state_services_1.listStatesService)(limit);
+        if (data == null || data.length == 0) {
+            return c.text("User not found", 404);
+        }
+        return c.json(data, 200);
+    }
+    catch (error) {
+        return c.json({ error: error?.message }, 400);
+    }
+};
+exports.listStates = listStates;
 // Get state by ID
 const getState = async (c) => {
     try {

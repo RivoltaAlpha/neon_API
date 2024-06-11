@@ -5,9 +5,11 @@ const hono_1 = require("hono");
 const city_controller_1 = require("./city.controller");
 const zod_validator_1 = require("@hono/zod-validator");
 const validator_1 = require("../validator");
+const auth_1 = require("../middleware/auth");
 exports.cityRouter = new hono_1.Hono();
 // Get a single city by ID: api/cities/1
 exports.cityRouter.get("/cities/:id", city_controller_1.getCity);
+exports.cityRouter.get("/cities", auth_1.authenticateAdmin, city_controller_1.listCity);
 // Create a city
 exports.cityRouter.post("/cities", (0, zod_validator_1.zValidator)("json", validator_1.citySchema, (result, c) => {
     if (!result.success) {

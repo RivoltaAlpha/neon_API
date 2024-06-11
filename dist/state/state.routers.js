@@ -5,9 +5,13 @@ const hono_1 = require("hono");
 const state_controller_1 = require("./state.controller");
 const zod_validator_1 = require("@hono/zod-validator");
 const validator_1 = require("../validator");
+const auth_1 = require("../middleware/auth");
 exports.stateRouter = new hono_1.Hono();
+// Apply authenticateUser middleware to all routes
+exports.stateRouter.use('*', auth_1.authenticateAdmin);
 // Get a single state by ID: api/states/1
-exports.stateRouter.get("/states/:id", state_controller_1.getState);
+exports.stateRouter.get("/states/:id", auth_1.authenticateUser, state_controller_1.getState);
+exports.stateRouter.get("/states", auth_1.authenticateUser, state_controller_1.listStates);
 // Create a state
 exports.stateRouter.post("/states", (0, zod_validator_1.zValidator)("json", validator_1.stateSchema, (result, c) => {
     if (!result.success) {

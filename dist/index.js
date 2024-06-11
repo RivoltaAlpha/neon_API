@@ -36,6 +36,13 @@ app.use((0, trailing_slash_1.trimTrailingSlash)()); //removes trailing slashes f
 app.use("/", (0, timeout_1.timeout)(10000, customTimeoutException));
 //3rd party middlewares
 app.use("*", registerMetrics);
+//default routes
+app.get('/', (c) => {
+    return c.text('Your API is  Running😏😏😏😏😏');
+});
+app.notFound((c) => {
+    return c.text('Route Not Found', 404);
+});
 app.get("/timeout", async (c) => {
     await new Promise((resolve) => setTimeout(resolve, 11000));
     return c.text("data after 5 seconds", 200);

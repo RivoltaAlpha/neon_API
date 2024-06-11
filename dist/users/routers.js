@@ -7,12 +7,12 @@ const zod_validator_1 = require("@hono/zod-validator");
 const validator_1 = require("../validator");
 const auth_1 = require("../middleware/auth");
 exports.userRouter = new hono_1.Hono();
-//get a single user    api/users/1
-exports.userRouter.get("/users/:id", contoller_1.getUser);
-//get all users      api/users
-exports.userRouter.get("/users", auth_1.authenticateAdmin, contoller_1.listUsers);
+// Apply authenticateUser middleware to all routes
+exports.userRouter.use('*', auth_1.authenticateAdmin);
 //get a single user    api/users/1
 exports.userRouter.get("/users/:id", auth_1.authenticateUser, contoller_1.getUser);
+//get all users      api/users
+exports.userRouter.get("/users", contoller_1.listUsers);
 // quserRouter.get("/users/:id","admin",  getUser)
 // create a user 
 exports.userRouter.post("/users", (0, zod_validator_1.zValidator)('json', validator_1.userSchema, (result, c) => {
@@ -21,7 +21,7 @@ exports.userRouter.post("/users", (0, zod_validator_1.zValidator)('json', valida
     }
 }), contoller_1.createUser);
 // PUT /user/:id
-exports.userRouter.put("/user/:id", async (c) => (0, contoller_1.updateUser)(c));
+exports.userRouter.put("/user/:id", auth_1.authenticateUser, async (c) => (0, contoller_1.updateUser)(c));
 // DELETE /user/:id
 exports.userRouter.delete("/user/:id", async (c) => (0, contoller_1.deleteUser)(c));
 // GET /user/:id/orders

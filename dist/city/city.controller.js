@@ -1,7 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCity = exports.updateCity = exports.createCity = exports.getCity = void 0;
+exports.deleteCity = exports.updateCity = exports.createCity = exports.getCity = exports.listCity = void 0;
 const city_services_1 = require("./city.services");
+const listCity = async (c) => {
+    try {
+        //limit the number of users to be returned
+        const limit = Number(c.req.query('limit'));
+        const data = await (0, city_services_1.listCityService)(limit);
+        if (data == null || data.length == 0) {
+            return c.text("User not found", 404);
+        }
+        return c.json(data, 200);
+    }
+    catch (error) {
+        return c.json({ error: error?.message }, 400);
+    }
+};
+exports.listCity = listCity;
 // Get city by ID
 const getCity = async (c) => {
     try {
