@@ -5,9 +5,11 @@ const hono_1 = require("hono");
 const address_contoller_1 = require("./address.contoller");
 const zod_validator_1 = require("@hono/zod-validator");
 const validator_1 = require("../validator");
+const auth_1 = require("../middleware/auth");
 exports.addressRouter = new hono_1.Hono();
+exports.addressRouter.use('*', auth_1.authenticateAdmin);
 // Get a single Address
-exports.addressRouter.get("/addresses/:id", address_contoller_1.getAddress);
+exports.addressRouter.get("/addresses/:id", auth_1.authenticateUser, address_contoller_1.getAddress);
 // Create an Address
 exports.addressRouter.post("/addresses", (0, zod_validator_1.zValidator)("json", validator_1.addressSchema, (result, c) => {
     if (!result.success) {

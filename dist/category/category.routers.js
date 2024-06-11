@@ -5,9 +5,12 @@ const hono_1 = require("hono");
 const category_controller_1 = require("./category.controller");
 const zod_validator_1 = require("@hono/zod-validator");
 const validator_1 = require("../validator");
+const auth_1 = require("../middleware/auth");
 exports.categoryRouter = new hono_1.Hono();
+// Apply authenticateUser middleware to all routes
+exports.categoryRouter.use('*', auth_1.authenticateAdmin);
 // Get a single Category
-exports.categoryRouter.get("/categories/:id", category_controller_1.getCategory);
+exports.categoryRouter.get("/categories/:id", auth_1.authenticateUser, category_controller_1.getCategory);
 // Create a Category
 exports.categoryRouter.post("/categories", (0, zod_validator_1.zValidator)("json", validator_1.categorySchema, (result, c) => {
     if (!result.success) {

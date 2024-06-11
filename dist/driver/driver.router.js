@@ -5,9 +5,11 @@ const hono_1 = require("hono");
 const driver_controller_1 = require("./driver.controller");
 const zod_validator_1 = require("@hono/zod-validator");
 const validator_1 = require("../validator");
+const auth_1 = require("../middleware/auth");
 exports.driverRouter = new hono_1.Hono();
+exports.driverRouter.use('*', auth_1.authenticateAdmin);
 // Get a single Driver
-exports.driverRouter.get("/drivers/:id", driver_controller_1.getDriver);
+exports.driverRouter.get("/drivers/:id", auth_1.authenticateUser, driver_controller_1.getDriver);
 // Create a Driver
 exports.driverRouter.post("/drivers", (0, zod_validator_1.zValidator)("json", validator_1.driverSchema, (result, c) => {
     if (!result.success) {

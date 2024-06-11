@@ -5,9 +5,11 @@ const hono_1 = require("hono");
 const order_menu_controller_1 = require("./order-menu.controller");
 const zod_validator_1 = require("@hono/zod-validator");
 const validator_1 = require("../validator");
+const auth_1 = require("../middleware/auth");
 exports.orderMenuItemRouter = new hono_1.Hono();
+exports.orderMenuItemRouter.use('*', auth_1.authenticateAdmin);
 // Get a single OrderMenuItem
-exports.orderMenuItemRouter.get("/order_menu_items/:id", order_menu_controller_1.getOrderMenuItem);
+exports.orderMenuItemRouter.get("/order_menu_items/:id", auth_1.authenticateUser, order_menu_controller_1.getOrderMenuItem);
 // Create a OrderMenuItem
 exports.orderMenuItemRouter.post("/order_menu_items", (0, zod_validator_1.zValidator)("json", validator_1.order_menu_itemSchema, (result, c) => {
     if (!result.success) {

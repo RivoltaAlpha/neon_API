@@ -1,3 +1,5 @@
+###
+GET http://localhost:8000/api/welcome
 
 ###
 GET http://localhost:8000/api/timeout
@@ -7,7 +9,8 @@ GET http://localhost:8000/api/timeout
 GET  http://localhost:8000/api/users/1
 
 ###
-GET  http://localhost:8000/api/users
+GET  http://localhost:8000/api/cities
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJUeWxhIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzE4MTE1MjE2fQ.TRJKnslSAtmNoJtyMw4VNxa5f0DduTiJQN9U9FDK4_c
 
 ###
 POST  http://localhost:8000/api/auth/register
@@ -16,7 +19,7 @@ Content-Type: application/json
 {
     "userId":5,
     "password": "pass",
-    "username": "Tyla",
+    "username": "Tiffany",
     "role": "user"
 }
 
@@ -26,13 +29,14 @@ POST  http://localhost:8000/api/auth/login
 Content-Type: application/json
 
 {
-    "username": "Tyla",
+    "username": "Tiffany",
     "password": "pass"
 }
 
 ###
-GET http://localhost:8000/api/users
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJUeWxhIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzE4MTAxMzY4fQ.8iZ9VzEvZjdqscM24w6-CR3YDAMwqNa5qFbyXV4y-Go
+GET http://localhost:8000/api/states/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJUaWZmYW55Iiwicm9sZSI6InVzZXIiLCJleHAiOjE3MTgxMTk3OTF9.LkIoONBfPZskMOBlUsLHAP3ie9RGpXmk76oS60GRo0w
+
 ###
 GET http://localhost:8000/api/users?limit=4
 

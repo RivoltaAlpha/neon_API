@@ -8,7 +8,7 @@ import { timeout } from "hono/timeout";
 import { HTTPException } from "hono/http-exception";
 import { prometheus } from "@hono/prometheus";
 
-import {authRouter,} from "./auth/auth.router";
+import { authRouter } from "./auth/auth.router";
 import { userRouter } from "./users/routers";
 import { restaurantRouter } from "./restaurants/restaurant.router";
 import { stateRouter } from "./state/state.routers";
@@ -19,11 +19,10 @@ import { orderStatusRouter } from "./order-status/order-status.router";
 import { addressRouter } from "./address/address.router";
 import { driverRouter } from "./driver/driver.router";
 import { menuItemRouter } from "./menu-item/menu-router";
-import { statusRouter } from "./status-catalog/status-routes"
-import { commentRouter } from "./comments/comments-routers"
-import { categoryRouter } from "./category/category.routers"
+import { statusRouter } from "./status-catalog/status-routes";
+import { commentRouter } from "./comments/comments-routers";
+import { categoryRouter } from "./category/category.routers";
 import { ownersRouter } from "./restaurant-owners/owners.routers";
-
 
 const app = new Hono().basePath("/api");
 const customTimeoutException = () =>
@@ -41,12 +40,12 @@ app.use("/", timeout(10000, customTimeoutException));
 app.use("*", registerMetrics);
 
 //default routes
-app.get('/', (c) => {
-  return c.text('Your API is  Running😏😏😏😏😏')
-})
+app.get("/welcome", (c) => {
+  return c.text("Your API is  Running😏😏😌😌😌😲");
+});
 app.notFound((c) => {
-  return c.text('Route Not Found', 404)
-})
+  return c.text("Route Not Found", 404);
+});
 
 app.get("/timeout", async (c) => {
   await new Promise((resolve) => setTimeout(resolve, 11000));
@@ -70,7 +69,6 @@ app.route("/", statusRouter);
 app.route("/", commentRouter);
 app.route("/", categoryRouter);
 app.route("/", ownersRouter);
-
 
 serve({
   fetch: app.fetch,

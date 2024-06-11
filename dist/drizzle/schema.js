@@ -192,7 +192,7 @@ exports.usersRelations = (0, drizzle_orm_1.relations)(exports.users, ({ many }) 
     restaurant_owners: many(exports.restaurant_owner),
     drivers: many(exports.driver),
 }));
-exports.roleEnum = (0, pg_core_1.pgEnum)("role", ["admin", "user"]);
+exports.roleEnum = (0, pg_core_1.pgEnum)("role", ["admin", "user", "both"]);
 // The auth_user table schema
 exports.authUser = (0, pg_core_1.pgTable)('auth_user', {
     id: (0, pg_core_1.serial)("id").primaryKey(),

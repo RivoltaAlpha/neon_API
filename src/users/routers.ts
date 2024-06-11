@@ -2,15 +2,15 @@ import { Hono, Context } from "hono";
 import { getUser,createUser,updateUser,deleteUser,getComments,getOrders,listUsers } from "./contoller"
 import { zValidator } from "@hono/zod-validator";
 import { userSchema } from "../validator";
-import { authenticateUser, authenticateAdmin } from "../middleware/auth";
+import { authenticateUser, authenticateAdmin, authenticateBoth } from "../middleware/auth";
 
 export const userRouter = new Hono();
 
 // Apply authenticateUser middleware to all routes
-userRouter.use('*', authenticateAdmin);
+userRouter.use('*', authenticateBoth);
 
 //get a single user    api/users/1
-userRouter.get("/users/:id",authenticateUser, getUser)
+userRouter.get("/users/:id", getUser)
 
 //get all users      api/users
 userRouter.get("/users", listUsers);

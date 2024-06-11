@@ -5,9 +5,11 @@ const hono_1 = require("hono");
 const order_status_controller_1 = require("./order-status.controller");
 const zod_validator_1 = require("@hono/zod-validator");
 const validator_1 = require("../validator");
+const auth_1 = require("../middleware/auth");
 exports.orderStatusRouter = new hono_1.Hono();
+exports.orderStatusRouter.use('*', auth_1.authenticateAdmin);
 // Get a single OrderStatus
-exports.orderStatusRouter.get("/order_statuses/:id", order_status_controller_1.getOrderStatus);
+exports.orderStatusRouter.get("/order_statuses/:id", auth_1.authenticateUser, order_status_controller_1.getOrderStatus);
 // Create a OrderStatus
 exports.orderStatusRouter.post("/order_statuses", (0, zod_validator_1.zValidator)("json", validator_1.order_statusSchema, (result, c) => {
     if (!result.success) {

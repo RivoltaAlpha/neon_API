@@ -8,9 +8,9 @@ const validator_1 = require("../validator");
 const auth_1 = require("../middleware/auth");
 exports.userRouter = new hono_1.Hono();
 // Apply authenticateUser middleware to all routes
-exports.userRouter.use('*', auth_1.authenticateAdmin);
+exports.userRouter.use('*', auth_1.authenticateBoth);
 //get a single user    api/users/1
-exports.userRouter.get("/users/:id", auth_1.authenticateUser, contoller_1.getUser);
+exports.userRouter.get("/users/:id", contoller_1.getUser);
 //get all users      api/users
 exports.userRouter.get("/users", contoller_1.listUsers);
 // quserRouter.get("/users/:id","admin",  getUser)
