@@ -4,8 +4,28 @@ import {
   createOrderService,
   updateOrderService,
   deleteOrderService,
-  listService
+  listService,
+  getOrderAddress,
+  getOrderComments,
+  getOrderDriver,
+  getOrderUser,
+  listOtherAssociatedServices
 } from "./orders.services";
+
+// List all orders with related details
+export const listOtherOrderDetails = async (c: Context) => {
+  try {
+    const limit = Number(c.req.query('limit'));
+
+    const data = await listOtherAssociatedServices(limit);
+    if (data == null || data.length == 0) {
+      return c.text("Orders not found", 404);
+    }
+    return c.json(data, 200);
+  } catch (error: any) {
+    return c.json({ error: error?.message }, 400);
+  }
+}
 
 //get all
 export const listUsers = async (c: Context) => {
@@ -91,12 +111,67 @@ export const deleteOrder = async (c: Context) => {
   }
 };
 
-// export const searchOrders = async (c: Context) => {
-//   try {
-//       const query = c.req.query();
-//       const orders = await searchOrdersService(query);
-//       return c.json(orders, 200);
-//   } catch (error: any) {
-//       return c.json({ error: error?.message }, 400);
-//   }
-// }
+// Get comments for an order
+export const OrderComments = async (c: Context) => {
+  try {
+    const id = parseInt(c.req.param("id"));
+    if (isNaN(id)) return c.text("Invalid ID", 400);
+
+    const comments = await getOrderComments(id);
+    if (comments === null || comments.length === 0) {
+      return c.text("No comments found for this order", 404);
+    }
+    return c.json(comments, 200);
+  } catch (error: any) {
+    return c.json({ error: error?.message }, 400);
+  }
+};
+
+// Get driver for an order
+export const OrderDriver = async (c: Context) => {
+  try {
+    const id = parseInt(c.req.param("id"));
+    if (isNaN(id)) return c.text("Invalid ID", 400);
+
+    const driver = await getOrderDriver(id);
+    if (driver === null || driver.length === 0) {
+      return c.text("No driver found for this order", 404);
+    }
+    return c.json(driver, 200);
+  } catch (error: any) {
+    return c.json({ error: error?.message }, 400);
+  }
+};
+
+// Get address for an order
+export const OrderAddress = async (c: Context) => {
+  try {
+    const id = parseInt(c.req.param("id"));
+    if (isNaN(id)) return c.text("Invalid ID", 400);
+
+    const address = await getOrderAddress(id);
+    if (address === null || address.length === 0) {
+      return c.text("No address found for this order", 404);
+    }
+    return c.json(address, 200);
+  } catch (error: any) {
+    return c.json({ error: error?.message }, 400);
+  }
+};
+
+// Get user for an order
+export const OrderUsers = async (c: Context) => {
+  try {
+    const id = parseInt(c.req.param("id"));
+    if (isNaN(id)) return c.text("Invalid ID", 400);
+
+    const user = await getOrderUser(id);
+    if (user === null || user.length === 0) {
+      return c.text("No user found for this order", 404);
+    }
+    return c.json(user, 200);
+  } catch (error: any) {
+    return c.json({ error: error?.message }, 400);
+  }
+};
+

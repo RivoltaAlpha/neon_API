@@ -46,15 +46,15 @@ app.get("/welcome", (c) => {
       <head>
         <title>Welcome to Our API</title>
         <style>
-          body { font-family: Arial, sans-serif; background-color: #f0f0f0; text-align: center; padding: 50px; }
-          h1 { color: #333; }
+          body { font-family: Arial, sans-serif; background-color: aqua; text-align: center; padding: 50px; }
+          h1 { color: black; }
           p { color: #666; }
           .emoji { font-size: 2em; }
         </style>
       </head>
       <body>
         <div class="emoji">😏😏😌😌😌😲</div>
-        <h1>Welcome to Our API</h1>
+        <h1>Welcome to Our API Tiffany 😎</h1>
         <p>Your API is running smoothly!</p>
         <p>Explore the available endpoints and enjoy the features.</p>
       </body>

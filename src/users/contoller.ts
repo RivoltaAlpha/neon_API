@@ -27,7 +27,6 @@ export const listUsers = async (c: Context) => {
   }
 }
 
-
 //search user
 export const getUser = async (c: Context) => {
   try {
