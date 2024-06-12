@@ -1,5 +1,5 @@
-import  {db}  from '../drizzle/db';
-import { TIRestaurantOwner, TSRestaurantOwner, restaurant_owner } from "../drizzle/schema";
+import { db } from '../drizzle/db';
+import { TIRestaurantOwner, TSRestaurantOwner, restaurant_owner, restaurant, city, users } from "../drizzle/schema";
 import { and, eq } from "drizzle-orm";
 
 export const listService = async (limit?: number): Promise<TSRestaurantOwner[] | null> => {
@@ -32,3 +32,27 @@ export const deleteRestaurantOwnerService = async (restaurant_id: number, owner_
         .where(and(eq(restaurant_owner.restaurant_id, restaurant_id), eq(restaurant_owner.owner_id, owner_id)));
     return "Restaurant Owner relationship deleted successfully";
 };
+
+export async function getUserOwnedRestaurants(id: TSRestaurantOwner['owner_id']): Promise<any[]> {
+    return db.select({
+        restaurant: {
+            id: restaurant.id,
+            name: restaurant.name,
+            address: restaurant.street_address,
+            owner: restaurant_owner.owner_id,
+        },
+        city: {
+            id: city.id,
+            name: city.name
+        },
+        user: {
+            id: users.id,
+            name: users.name
+        }
+    })
+    .from(restaurant_owner)
+    .innerJoin(restaurant, eq(restaurant_owner.restaurant_id, restaurant.id))
+    .innerJoin(city, eq(restaurant.city_id, city.id))
+    .innerJoin(users, eq(restaurant_owner.owner_id, users.id))
+    .where(eq(restaurant_owner.owner_id, id));
+}

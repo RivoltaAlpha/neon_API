@@ -7,8 +7,8 @@ import {
   deleteUserService,
   getUserComments,
   getUserOrders,
-  getUserOwnedRestaurants,
   usersService,
+  getUserOwnedRestaurants
 } from "./services";
 
 export const listUsers = async (c: Context) => {
@@ -128,3 +128,18 @@ export const getOrders = async (c: Context) => {
       return c.json({ error: "Failed to fetch user orders" }, 500);
     }
   };
+
+  export const getUserOwnedRestaurantsController = async (c: Context) => {
+    try {
+        const id = parseInt(c.req.param("id"));
+        if (isNaN(id)) return c.text("Invalid ID", 400);
+
+        const restaurants = await getUserOwnedRestaurants(id);
+        if (restaurants.length === 0) {
+            return c.text("No restaurants found for this user", 404);
+        }
+        return c.json(restaurants, 200);
+    } catch (error: any) {
+        return c.json({ error: error?.message }, 500);
+    }
+};

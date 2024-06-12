@@ -9,7 +9,7 @@ export const orderRouter = new Hono();
 orderRouter.get('/orders', authenticateAdmin, getOrder);
 
 // Get a single order by ID: api/orders/1
-orderRouter.get("/orders/:id", authenticateBoth, getOrder);
+orderRouter.get("/order/:id", authenticateBoth, getOrder);
 
 // Create an order
 orderRouter.post(
@@ -23,22 +23,22 @@ orderRouter.post(
 );
 
 // Update an order by ID
-orderRouter.put("/orders/:id",authenticateBoth, updateOrder);
+orderRouter.put("/order-update/:id",authenticateBoth, updateOrder);
 
 // Delete an order by ID
-orderRouter.delete("/orders/:id",authenticateBoth, deleteOrder);
+orderRouter.delete("/order-delete/:id",authenticateBoth, deleteOrder);
 
 // Get comments for an order
-orderRouter.get('/orders/:id/comments', authenticateBoth, OrderComments);
+orderRouter.get('/order/:id/comments', authenticateBoth, OrderComments);
 
 // Get driver for an order
-orderRouter.get('/orders/:id/driver', authenticateBoth, OrderDriver);
+orderRouter.get('/order/:id/driver', authenticateBoth, OrderDriver);
 
 // Get address for an order
-orderRouter.get('/orders/:id/address', authenticateBoth, OrderAddress);
+orderRouter.get('/order/:id/address', authenticateBoth, OrderAddress);
 
 // Get statuses for an order
-orderRouter.get('/orders/:id/deets', authenticateBoth, listOtherOrderDetails);
+orderRouter.get('/order/:id/deets', authenticateBoth, listOtherOrderDetails);
 
 // Get user for an order
-orderRouter.get('/orders/:id/user', authenticateBoth, OrderUsers);
+orderRouter.get('/order/:id/user', authenticateBoth, OrderUsers);

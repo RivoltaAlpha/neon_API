@@ -1,0 +1,77 @@
+###
+GET http://localhost:8000/api/welcome
+
+
+###
+POST  http://localhost:8000/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "Jackson",
+    "password": "pass"
+}
+
+###user applicetions
+###
+GET  http://localhost:8000/api/user/1
+
+
+###
+GET  http://localhost:8000/api/users
+
+
+###
+GET  http://localhost:8000/api/user/1/orders
+
+
+###
+GET  http://localhost:8000/api/user/1/comments
+
+###
+GET  http://localhost:8000/api/users/1/owned-restaurants
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKYWNrc29uIiwicm9sZSI6InVzZXIiLCJleHAiOjE3MTgyMDY0MTB9.shNZirF1S7LtoeN5hYbm41EJ0xKnYBu0jLcgWYnRYt8
+
+###state 
+###
+GET  http://localhost:8000/api/state/5
+
+
+###
+GET  http://localhost:8000/api/states
+
+
+###
+GET  http://localhost:8000/api/state/1/list-city-states
+
+
+### Orders
+###
+GET  http://localhost:8000/api/order/1
+
+
+
+###
+GET  http://localhost:8000/api/order/1/driver
+
+###
+GET  http://localhost:8000/api/order/1/address
+
+
+###
+GET  http://localhost:8000/api/order/2/comments
+
+
+###
+GET  http://localhost:8000/api/order/2/user
+
+
+###
+GET  http://localhost:8000/api/order/2/deets
+
+
+
+### Restaurant
+http://localhost:8000/api/restaurant-owners/list
+
+###
+http://localhost:8000/api/restaurant-owners/1/owned-restaurants

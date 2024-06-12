@@ -4,13 +4,12 @@ import {
     createRestaurantOwnerService,
     updateRestaurantOwnerService,
     deleteRestaurantOwnerService,
-    listService
+    listService,
+    getUserOwnedRestaurants
 } from "./owners.services";
 //list all
-export const listUsers = async (c: Context) => {
+export const listOwners = async (c: Context) => {
     try {
-        //limit the number of users to be returned
-  
         const limit = Number(c.req.query('limit'))
   
         const data = await listService(limit);
@@ -23,24 +22,21 @@ export const listUsers = async (c: Context) => {
     }
   }
 
-// Get RestaurantOwner
+// Get a single restaurant owner by ID
 export const getRestaurantOwner = async (c: Context) => {
     try {
-        const restaurant_id = parseInt(c.req.param("restaurant_id"));
-        const owner_id = parseInt(c.req.param("owner_id"));
-        if (isNaN(restaurant_id) || isNaN(owner_id)) return c.text("Invalid ID", 400);
+        const id = parseInt(c.req.param("id"));
+        if (isNaN(id)) return c.text("Invalid ID", 400);
 
-        const restaurantOwner = await getRestaurantOwnerService(owner_id);
-        if (restaurantOwner === null) {
-            return c.text("Restaurant Owner relationship not found", 404);
+        const owner = await getRestaurantOwnerService(id);
+        if (owner.length === 0) {
+            return c.text("Restaurant Owner not found", 404);
         }
-        return c.json(restaurantOwner, 200);
+        return c.json(owner, 200);
     } catch (error: any) {
-        console.error(error?.message);
         return c.json({ error: error?.message }, 500);
     }
 };
-
 // Create RestaurantOwner
 export const createRestaurantOwner = async (c: Context) => {
     try {
@@ -81,5 +77,20 @@ export const deleteRestaurantOwner = async (c: Context) => {
         return c.json({ msg: deletedRestaurantOwner }, 200);
     } catch (error: any) {
         return c.json({ error: error?.message }, 400);
+    }
+};
+
+export const getUserOwnedRestaurantsController = async (c: Context) => {
+    try {
+        const id = parseInt(c.req.param("id"));
+        if (isNaN(id)) return c.text("Invalid ID", 400);
+
+        const restaurants = await getUserOwnedRestaurants(id);
+        if (restaurants.length === 0) {
+            return c.text("No restaurants found for this user", 404);
+        }
+        return c.json(restaurants, 200);
+    } catch (error: any) {
+        return c.json({ error: error?.message }, 500);
     }
 };

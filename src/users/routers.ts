@@ -1,5 +1,5 @@
 import { Hono, Context } from "hono";
-import { getUser,createUser,updateUser,deleteUser,getComments,getOrders,listUsers } from "./contoller"
+import { getUser,createUser,updateUser,deleteUser,getComments,getOrders,listUsers,getUserOwnedRestaurantsController } from "./contoller"
 import { zValidator } from "@hono/zod-validator";
 import { userSchema } from "../validator";
 import { authenticateAdmin, authenticateBoth } from "../middleware/auth";
@@ -10,7 +10,7 @@ export const userRouter = new Hono();
 // userRouter.use('*', authenticateBoth);
 
 //get a single user    api/users/1
-userRouter.get("/users/:id", authenticateBoth, getUser)
+userRouter.get("/user/:id", authenticateBoth, getUser)
 
 //get all users      api/users
 userRouter.get("/users", authenticateBoth, listUsers);
@@ -32,7 +32,10 @@ userRouter.put("/user/:id",authenticateAdmin, async (c: Context) => updateUser(c
 userRouter.delete("/user/:id", authenticateAdmin, async (c: Context) => deleteUser(c));
 
 // GET /user/:id/orders
-userRouter.get("/user/:id/orders", authenticateAdmin, async (c: Context) => getOrders(c));
+userRouter.get("/user/:id/orders", authenticateBoth, async (c: Context) => getOrders(c));
 
 // GET /user/:id/comments
-userRouter.get("/user/:id/comments", authenticateAdmin, async (c: Context) => getComments(c));
+userRouter.get("/user/:id/comments", authenticateBoth, async (c: Context) => getComments(c));
+
+// user owned restaurants
+userRouter.get("/users/:id/owned-restaurants", authenticateBoth, getUserOwnedRestaurantsController);

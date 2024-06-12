@@ -5,7 +5,27 @@ import {
   createStateService,
   updateStateService,
   deleteStateService,
+  listCitiesInState
+  
 } from "./state.services";
+
+export const listCitiesInStateController = async (c: Context) => {
+  try {
+    const stateId = parseInt(c.req.param("id")); 
+    console.log("State ID Parameter😒:", stateId);
+
+    if (isNaN(stateId) || stateId <= 0) {
+        console.log("Invalid State ID:", stateId);
+        return c.text("Invalid state ID", 400);
+    }
+
+    const cities = await listCitiesInState(stateId);
+    return c.json(cities, 200);
+} catch (error: any) {
+    console.error(error?.message);
+    return c.json({ error: error?.message }, 500);
+}
+};
 
 export const listStates = async (c: Context) => {
   try {
