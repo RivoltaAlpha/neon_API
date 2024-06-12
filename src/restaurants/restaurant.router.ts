@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { listRestaurants,getRestaurant, createRestaurant, updateRestaurant, deleteRestaurant } from "./restaurant.controller";
+import { getRestaurantDetailsController,listRestaurants,getRestaurant, createRestaurant, updateRestaurant, deleteRestaurant } from "./restaurant.controller";
 import { zValidator } from "@hono/zod-validator";
 import { restaurantSchema } from "../validator"; // Ensure you have a validator schema for restaurant data
 import { authenticateAdmin, authenticateBoth } from "../middleware/auth";
@@ -27,3 +27,7 @@ restaurantRouter.put("/restaurants/:id",authenticateAdmin, updateRestaurant);
 
 // Delete a restaurant by ID
 restaurantRouter.delete("/restaurants/:id",authenticateAdmin, deleteRestaurant);
+
+// Get details of a specific restaurant
+restaurantRouter.get('/restaurant/:id/details', authenticateBoth, getRestaurantDetailsController);
+

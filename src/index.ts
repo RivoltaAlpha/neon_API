@@ -46,7 +46,7 @@ app.get("/welcome", (c) => {
       <head>
         <title>Welcome to Our API</title>
         <style>
-          body { font-family: Arial, sans-serif; background-color: aqua; text-align: center; padding: 50px; }
+          body { font-family: Arial, sans-serif; background-color:hsl(240, 100%, 90%); text-align: center; padding: 50px; }
           h1 { color: black; }
           p { color: #666; }
           .emoji { font-size: 2em; }

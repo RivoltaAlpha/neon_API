@@ -29,7 +29,6 @@ GET  http://localhost:8000/api/user/1/comments
 
 ###
 GET  http://localhost:8000/api/users/1/owned-restaurants
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKYWNrc29uIiwicm9sZSI6InVzZXIiLCJleHAiOjE3MTgyMDY0MTB9.shNZirF1S7LtoeN5hYbm41EJ0xKnYBu0jLcgWYnRYt8
 
 ###state 
 ###
@@ -75,3 +74,8 @@ http://localhost:8000/api/restaurant-owners/list
 
 ###
 http://localhost:8000/api/restaurant-owners/1/owned-restaurants
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKYWNrc29uIiwicm9sZSI6InVzZXIiLCJleHAiOjE3MTgyMTA0MTR9.KHqw8N2BGTjrbWEo_1vU5e8KNCAXHDVKrNjWccn-P-c
+
+###
+http://localhost:8000/api/restaurant/1/details
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKYWNrc29uIiwicm9sZSI6InVzZXIiLCJleHAiOjE3MTgyMDY0MTB9.shNZirF1S7LtoeN5hYbm41EJ0xKnYBu0jLcgWYnRYt8
