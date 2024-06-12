@@ -39,9 +39,28 @@ app.use("/", timeout(10000, customTimeoutException));
 //3rd party middlewares
 app.use("*", registerMetrics);
 
-//default routes
+// Default routes
 app.get("/welcome", (c) => {
-  return c.text("Your API is  Running😏😏😌😌😌😲");
+  const welcomeMessage = `
+    <html>
+      <head>
+        <title>Welcome to Our API</title>
+        <style>
+          body { font-family: Arial, sans-serif; background-color: #f0f0f0; text-align: center; padding: 50px; }
+          h1 { color: #333; }
+          p { color: #666; }
+          .emoji { font-size: 2em; }
+        </style>
+      </head>
+      <body>
+        <div class="emoji">😏😏😌😌😌😲</div>
+        <h1>Welcome to Our API</h1>
+        <p>Your API is running smoothly!</p>
+        <p>Explore the available endpoints and enjoy the features.</p>
+      </body>
+    </html>
+  `;
+  return c.html(welcomeMessage);
 });
 app.notFound((c) => {
   return c.text("Route Not Found", 404);

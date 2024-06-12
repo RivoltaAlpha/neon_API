@@ -16,9 +16,9 @@ POST  http://localhost:8000/api/auth/register
 Content-Type: application/json
 
 {
-    "userId":1,
+    "userId":2,
     "password": "pass",
-    "username": "Tiffany",
+    "username": "Jackson",
     "role": "user"
 }
 
@@ -28,7 +28,7 @@ POST  http://localhost:8000/api/auth/login
 Content-Type: application/json
 
 {
-    "username": "Tiffany",
+    "username": "Jackson",
     "password": "pass"
 }
 
