@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { listOrders,getOrder, createOrder, updateOrder, deleteOrder,OrderAddress,OrderComments,OrderDriver,OrderUsers,listOtherOrderDetails } from "./orders.controller";
+import { listOrders,getOrder, createOrder, updateOrder, deleteOrder,OrderAddress,OrderComments,OrderDriver,OrderUsers } from "./orders.controller";
 import { zValidator } from "@hono/zod-validator";
 import { orderSchema } from "../validator";
 import { authenticateAdmin, authenticateBoth } from "../middleware/auth";
@@ -36,12 +36,6 @@ orderRouter.get('/order/:id/driver', authenticateBoth, OrderDriver);
 
 // Get address for an order
 orderRouter.get('/order/:id/address', authenticateBoth, OrderAddress);
-
-// Get statuses for an order
-orderRouter.get('/order/:id/deets', authenticateBoth, listOtherOrderDetails);
-
-//GET /api/orders/details?orderId=5
-//GET /api/orders/details?limit=10
 
 
 // Get user for an order

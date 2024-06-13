@@ -50,7 +50,8 @@ GET  http://localhost:8000/api/user/1/comments
 
 ###
 GET  http://localhost:8000/api/users/1/owned-restaurants
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJTa3lsYSIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTcxODI3NzE4OH0.m61iyz40jyAuQm3-jWGlyaqQo6Mwclb30pUwGRcMy9A
+
+
 
 ###state 
 ###
@@ -64,15 +65,19 @@ GET  http://localhost:8000/api/states
 POST  http://localhost:8000/api/create-state
 
 ###
-GET  http://localhost:8000/api/state/1/list-city-states
+GET  http://localhost:8000/api/state/1/list-state-cities
 
 
 ### Orders
 ###
 GET  http://localhost:8000/api/orders
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJTa3lsYSIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTcxODI3NDcwNH0.uleuQQ1zDFXOOX7F5wQ7zLVyD2jOO7WgNGLH8ElYVRk
+
+
 ###
 GET  http://localhost:8000/api/order/1
+
+###
+GET  http://localhost:8000/api/user-details/1
 
 ###
 GET  http://localhost:8000/api/create-order
@@ -91,10 +96,6 @@ GET  http://localhost:8000/api/order/2/comments
 ###
 GET  http://localhost:8000/api/order/2/user
 
-###
-GET  http://localhost:8000/api/order/1/deets?limit=1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJTa3lsYSIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTcxODI3ODY3OH0.nQqMpzLq47YNcDLPESpB1l2_bnsm4kbrMfT6g5taZ14
-
 
 ### Restaurant
 http://localhost:8000/api/restaurant-owners/list
@@ -111,7 +112,6 @@ GET  http://localhost:8000/api/create-restaurant
 
 ### ADDRESS
 GET  http://localhost:8000/api/list-addresses
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJTa3lsYSIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTcxODI3ODY3OH0.nQqMpzLq47YNcDLPESpB1l2_bnsm4kbrMfT6g5taZ14
 
 ###
 GET  http://localhost:8000/api/addresses/1
@@ -189,12 +189,12 @@ PUT  http://localhost:8000/api/update-drivers/6
 ###
 DELETE  http://localhost:8000/api/delete-drivers/6
 
-###MENU-ITEM
+###
 GET  http://localhost:8000/api/list-menu-items
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJTa3lsYSIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTcxODI5NTI2OH0.QhP907hutVfdIbG3x53mjF15QFSDTjpTD8samGU45_s
 
 ###
-GET  http://localhost:8000/api/menu-items/1
-
+GET  http://localhost:8000/api/menu-item/1
 ###
 POST  http://localhost:8000/api/create-menu-items
 

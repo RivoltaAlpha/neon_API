@@ -1,18 +1,23 @@
 import { eq } from "drizzle-orm";
 import db from "../drizzle/db";
-import { TIState, TSState, state,city } from "../drizzle/schema";
+import { TIState, TSState, state} from "../drizzle/schema";
 
-export const listCitiesInState = async (stateId: TSState['id']): Promise<any[]> => {
-    return db.select({
-        city: {
-            id: city.id,
-            name: city.name,
-        }
-    })
-        .from(city)
-        .innerJoin(state, eq(city.state_id, state.id)) // Join city table with state table
-        .where(eq(state.id, stateId)); // Filter by state ID
-};
+export const listCitiesInState = async (orderId: number) => {
+    return await db.query.state.findMany({
+      where: (fields, { eq }) => eq(fields.id, orderId),
+      columns: {
+        id: true,
+        name: true,
+      },
+      with: {
+        cities: {
+          columns: {
+            name: true,
+          },
+        },
+      },
+    });
+  };
 
 export const listStatesService = async (limit?: number): Promise<TSState[] | null> => {
     if (limit) {

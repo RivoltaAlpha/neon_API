@@ -1,5 +1,5 @@
 import { Hono, Context } from "hono";
-import { getUser,createUser,updateUser,deleteUser,getComments,getOrders,listUsers,getUserOwnedRestaurantsController } from "./contoller"
+import { getUser,createUser,updateUser,deleteUser,getComments,getOrders,listUsers,getUserOwnedRestaurantsController, getAllUserDetails } from "./contoller"
 import { zValidator } from "@hono/zod-validator";
 import { userSchema } from "../validator";
 import { authenticateAdmin, authenticateBoth } from "../middleware/auth";
@@ -39,3 +39,6 @@ userRouter.get("/user/:id/comments", authenticateBoth, async (c: Context) => get
 
 // user owned restaurants
 userRouter.get("/users/:id/owned-restaurants", authenticateBoth, getUserOwnedRestaurantsController);
+
+// all details
+userRouter.get("/user-details/:id", authenticateBoth, getAllUserDetails)

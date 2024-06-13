@@ -29,4 +29,4 @@ stateRouter.put("/state/:id",authenticateAdmin, updateState);
 stateRouter.delete("/state/:id",authenticateAdmin, deleteState);
 
 // list state 
-stateRouter.get("/state/:id/list-city-states",authenticateBoth, listCitiesInStateController);
+stateRouter.get("/state/:id/list-state-cities",authenticateBoth, listCitiesInStateController);

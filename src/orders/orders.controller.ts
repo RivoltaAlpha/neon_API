@@ -9,25 +9,8 @@ import {
   getOrderComments,
   getOrderDriver,
   getOrderUser,
-  listOtherAssociatedServices
+  getOrderDetails
 } from "./orders.services";
-
-// List orders with related details or a specific order by ID
-export const listOtherOrderDetails = async (c: Context) => {
-  try {
-    const limit = c.req.query('limit') ? Number(c.req.query('limit')) : undefined;
-    const orderId = c.req.query('orderId') ? Number(c.req.query('orderId')) : undefined;
-
-    const data = await listOtherAssociatedServices(orderId, limit);
-    if (data == null || data.length === 0) {
-      return c.text("Orders not found", 404);
-    }
-    return c.json(data, 200);
-  } catch (error: any) {
-    console.error("Error in listOtherOrderDetails:", error);
-    return c.json({ error: error?.message }, 400);
-  }
-};
 
 //get all
 export const listOrders = async (c: Context) => {
@@ -52,7 +35,7 @@ export const getOrder = async (c: Context) => {
     const id = parseInt(c.req.param("id"));
     if (isNaN(id)) return c.text("Invalid ID", 400);
 
-    const order = await getOrderService(id);
+    const order = await getOrderDetails(id);
     if (order === null) {
       return c.text("Order not found", 404);
     }

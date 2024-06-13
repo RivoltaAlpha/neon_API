@@ -2,6 +2,7 @@ import { Context } from "hono";
 import bycrpt from 'bcrypt';
 import {
   getUserById,
+  getUserDetails,
   createUserService,
   updateUserService,
   deleteUserService,
@@ -142,4 +143,22 @@ export const getOrders = async (c: Context) => {
     } catch (error: any) {
         return c.json({ error: error?.message }, 500);
     }
+};
+
+
+// Get order by ID
+export const getAllUserDetails = async (c: Context) => {
+  try {
+    const id = parseInt(c.req.param("id"));
+    if (isNaN(id)) return c.text("Invalid ID", 400);
+
+    const user = await getUserDetails(id);
+    if (user === null) {
+      return c.text("User not found", 404);
+    }
+    return c.json(user, 200);
+  } catch (error: any) {
+    console.error(error?.message);
+    return c.json({ error: error?.message }, 500);
+  }
 };

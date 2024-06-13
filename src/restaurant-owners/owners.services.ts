@@ -33,26 +33,33 @@ export const deleteRestaurantOwnerService = async (restaurant_id: number, owner_
     return "Restaurant Owner relationship deleted successfully";
 };
 
-export async function getUserOwnedRestaurants(id: TSRestaurantOwner['owner_id']): Promise<any[]> {
-    return db.select({
+export async function getUserOwnedRestaurants(id: number) {
+    return await db.query.restaurant_owner.findMany({
+      where: (fields, { eq }) => eq(fields.owner_id, id),
+      columns: {
+        restaurant_id: true,
+      },
+      with: {
         restaurant: {
-            id: restaurant.id,
-            name: restaurant.name,
-            address: restaurant.street_address,
-            owner: restaurant_owner.owner_id,
-        },
-        city: {
-            id: city.id,
-            name: city.name
-        },
-        user: {
-            id: users.id,
-            name: users.name
-        }
-    })
-    .from(restaurant_owner)
-    .innerJoin(restaurant, eq(restaurant_owner.restaurant_id, restaurant.id))
-    .innerJoin(city, eq(restaurant.city_id, city.id))
-    .innerJoin(users, eq(restaurant_owner.owner_id, users.id))
-    .where(eq(restaurant_owner.owner_id, id));
-}
+            columns: {
+                name: true,
+                city_id: true,
+                },
+                with: {
+                    city: {
+                        columns: {
+                            name: true,
+                            },
+                            with: {
+                                state: {
+                                  columns: {
+                                    name: true,
+                                  },
+                                },
+                              },
+                        },
+                },
+                },      
+      },
+    });
+  }
