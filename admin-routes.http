@@ -1,0 +1,206 @@
+###
+GET http://localhost:8000/api/welcome
+
+
+###
+POST  http://localhost:8000/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "Skyla",
+    "password": "pass"
+}
+
+###user applicetions
+###
+GET  http://localhost:8000/api/user/1
+
+###
+GET  http://localhost:8000/api/users
+
+
+###
+POST  http://localhost:8000/api/create_user
+Content-Type: application/json
+
+
+{
+  "id": 6,
+  "name": "Andrew John",
+  "contact_phone": "123-456-7890",
+  "phone_verified": true,
+  "email": "andrewjohn@example.com",
+  "email_verified": true,
+  "confirmation_code": "ABC123",
+  "password": "worldsapart"
+} 
+
+###
+PUT  http://localhost:8000/api/update-user/1
+
+###
+DELETE   http://localhost:8000/api/delete-user
+
+
+###
+GET  http://localhost:8000/api/user/1/orders
+
+###
+GET  http://localhost:8000/api/user/1/comments
+
+###
+GET  http://localhost:8000/api/users/1/owned-restaurants
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJTa3lsYSIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTcxODI3NzE4OH0.m61iyz40jyAuQm3-jWGlyaqQo6Mwclb30pUwGRcMy9A
+
+###state 
+###
+GET  http://localhost:8000/api/state/5
+
+
+###
+GET  http://localhost:8000/api/states
+
+###
+POST  http://localhost:8000/api/create-state
+
+###
+GET  http://localhost:8000/api/state/1/list-city-states
+
+
+### Orders
+###
+GET  http://localhost:8000/api/orders
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJTa3lsYSIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTcxODI3NDcwNH0.uleuQQ1zDFXOOX7F5wQ7zLVyD2jOO7WgNGLH8ElYVRk
+###
+GET  http://localhost:8000/api/order/1
+
+###
+GET  http://localhost:8000/api/create-order
+
+###
+GET  http://localhost:8000/api/order/1/driver
+
+###
+GET  http://localhost:8000/api/order/1/address
+
+
+###
+GET  http://localhost:8000/api/order/2/comments
+
+
+###
+GET  http://localhost:8000/api/order/2/user
+
+###
+GET  http://localhost:8000/api/order/1/deets?limit=1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJTa3lsYSIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTcxODI3ODY3OH0.nQqMpzLq47YNcDLPESpB1l2_bnsm4kbrMfT6g5taZ14
+
+
+### Restaurant
+http://localhost:8000/api/restaurant-owners/list
+
+###
+http://localhost:8000/api/restaurant-owners/1/owned-restaurants
+
+###
+http://localhost:8000/api/restaurant/1/details
+
+###
+GET  http://localhost:8000/api/create-restaurant
+
+
+### ADDRESS
+GET  http://localhost:8000/api/list-addresses
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJTa3lsYSIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTcxODI3ODY3OH0.nQqMpzLq47YNcDLPESpB1l2_bnsm4kbrMfT6g5taZ14
+
+###
+GET  http://localhost:8000/api/addresses/1
+###
+POST  http://localhost:8000/api/create-address
+
+###
+PUT  http://localhost:8000/api/update-addresses/6
+
+###
+DELETE  http://localhost:8000/api/delete-addresses/6
+
+
+
+###CATEGORY
+GET  http://localhost:8000/api/list-categories
+
+###
+GET  http://localhost:8000/api/categories/1
+
+###
+POST  http://localhost:8000/api/create-categories
+
+###
+PUT  http://localhost:8000/api/update-categories/6
+
+###
+DELETE  http://localhost:8000/api/delete-categories/6
+
+
+###CATEGORY
+GET  http://localhost:8000/api/list-cities
+
+###
+GET  http://localhost:8000/api/cities/1
+
+###
+POST  http://localhost:8000/api/create-cities
+
+###
+PUT  http://localhost:8000/api/update-cities/6
+
+###
+DELETE  http://localhost:8000/api/delete-cities/6
+
+
+###COMMENTS
+GET  http://localhost:8000/api/list-comments
+
+###
+GET  http://localhost:8000/api/comments/1
+
+###
+POST  http://localhost:8000/api/create-comments
+
+###
+PUT  http://localhost:8000/api/update-comments/6
+
+###
+DELETE  http://localhost:8000/api/delete-comments/6
+
+
+###DRIVER
+GET  http://localhost:8000/api/list-drivers
+
+###
+GET  http://localhost:8000/api/drivers/1
+
+###
+POST  http://localhost:8000/api/create-drivers
+
+###
+PUT  http://localhost:8000/api/update-drivers/6
+
+###
+DELETE  http://localhost:8000/api/delete-drivers/6
+
+###MENU-ITEM
+GET  http://localhost:8000/api/list-menu-items
+
+###
+GET  http://localhost:8000/api/menu-items/1
+
+###
+POST  http://localhost:8000/api/create-menu-items
+
+###
+PUT  http://localhost:8000/api/update-menu-item/6
+
+###
+DELETE  http://localhost:8000/api/delete-menu-items/6
+

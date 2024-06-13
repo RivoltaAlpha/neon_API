@@ -13,7 +13,7 @@ stateRouter.get("/states", authenticateBoth, listStates);
 
 // Create a state
 stateRouter.post(
-  "/states",
+  "/create-state",
   zValidator("json", stateSchema, (result, c) => {
     if (!result.success) {
       return c.json(result.error, 400);

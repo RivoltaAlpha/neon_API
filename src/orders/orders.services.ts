@@ -11,14 +11,50 @@ export const listService = async (limit?: number): Promise<TSOrder[] | null> => 
     return await db.query.orders.findMany();
 };
 
-// List all orders with related details
-export const listOtherAssociatedServices = async (limit?: number): Promise<any[]> => {
-    const query = db.select()
-        .from(orders)
-        .leftJoin(comment, eq(orders.id, comment.order_id)) // Might not have comments
-        .innerJoin(driver, eq(orders.driver_id, driver.id)) // Each order should have a driver
-        .innerJoin(address, eq(orders.delivery_address_id, address.id)) // Each order should have an address
-        .innerJoin(users, eq(orders.user_id, users.id)) // Each order should have a user
+// List orders with related details
+export const listOtherAssociatedServices = async (orderId?: number, limit?: number): Promise<any[]> => {
+    const query = db.select({
+        order: {
+            id: orders.id,
+            restaurant_id: orders.restaurant_id,
+            driver_id: orders.driver_id,
+            delivery_address_id: orders.delivery_address_id,
+            actual_delivery_time: orders.actual_delivery_time,
+            final_price: orders.final_price,
+        },
+        comment: {
+            id: comment.id,
+            text: comment.comment,
+        },
+        driver: {
+            Driver_id: driver.id,
+            User_being_delivered_to: users.name,
+            Available: driver.online,
+            contact: driver.delivering
+            },
+            address: {
+                id: address.id,
+                user_id: address.user_id,
+                city_id: address.city_id,
+                zip_code:address.zip_code,
+                Instructions:address.delivery_instructions
+                },
+        user: {
+            id: users.id,
+            name: users.name,
+            email: users.email,
+            contact_phone: users.contact_phone,
+        }
+    })
+    .from(orders)
+    .leftJoin(comment, eq(orders.id, comment.order_id)) // Might not have comments
+    .innerJoin(driver, eq(orders.driver_id, driver.id)) // Each order should have a driver
+    .innerJoin(address, eq(orders.delivery_address_id, address.id)) // Each order should have an address
+    .innerJoin(users, eq(orders.user_id, users.id)); // Each order should have a user
+
+    if (orderId) {
+        query.where(eq(orders.id, orderId));
+    }
 
     if (limit) {
         query.limit(limit);
@@ -121,7 +157,7 @@ export const getOrderUser = async (orderId: TSOrder['id']): Promise<any[]> => {
         orders:{
             id: orders.id,
             restaurant_id:orders.restaurant_id,
-            order_delivery: orders.driver_id,
+            order_driver: orders.driver_id,
             order_date: orders.delivery_address_id
         }
     })

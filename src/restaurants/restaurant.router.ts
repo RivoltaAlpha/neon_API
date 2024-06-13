@@ -13,7 +13,7 @@ restaurantRouter.get("/restaurants", authenticateBoth, listRestaurants);
 
 // Create a restaurant with validation
 restaurantRouter.post(
-  "/restaurants",
+  "/create-restaurant",
   zValidator('json', restaurantSchema, (result, c) => {
     if (!result.success) {
       return c.json(result.error, 400);
@@ -23,10 +23,10 @@ restaurantRouter.post(
 );
 
 // Update a restaurant by ID
-restaurantRouter.put("/restaurants/:id",authenticateAdmin, updateRestaurant);
+restaurantRouter.put("/update-restaurants/:id",authenticateAdmin, updateRestaurant);
 
 // Delete a restaurant by ID
-restaurantRouter.delete("/restaurants/:id",authenticateAdmin, deleteRestaurant);
+restaurantRouter.delete("/delete-restaurants/:id",authenticateAdmin, deleteRestaurant);
 
 // Get details of a specific restaurant
 restaurantRouter.get('/restaurant/:id/details', authenticateBoth, getRestaurantDetailsController);

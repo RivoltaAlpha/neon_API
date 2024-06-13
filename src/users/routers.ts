@@ -18,7 +18,7 @@ userRouter.get("/users", authenticateBoth, listUsers);
 // quserRouter.get("/users/:id","admin",  getUser)
 
 // create a user 
-userRouter.post("/users", zValidator('json', userSchema, (result, c) => {
+userRouter.post("/create_user", zValidator('json', userSchema, (result, c) => {
     if (!result.success) {
         return c.json(result.error, 400)
     }
@@ -26,10 +26,10 @@ userRouter.post("/users", zValidator('json', userSchema, (result, c) => {
 
 
 // PUT /user/:id
-userRouter.put("/user/:id",authenticateAdmin, async (c: Context) => updateUser(c));
+userRouter.put("/update-user/:id",authenticateAdmin, async (c: Context) => updateUser(c));
 
 // DELETE /user/:id
-userRouter.delete("/user/:id", authenticateAdmin, async (c: Context) => deleteUser(c));
+userRouter.delete("/delete-user/:id", authenticateAdmin, async (c: Context) => deleteUser(c));
 
 // GET /user/:id/orders
 userRouter.get("/user/:id/orders", authenticateBoth, async (c: Context) => getOrders(c));

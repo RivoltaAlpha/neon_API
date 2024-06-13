@@ -6,10 +6,10 @@ import { authenticateBoth, authenticateAdmin } from "../middleware/auth";
 
 export const orderMenuItemRouter = new Hono();
 //list all
-orderMenuItemRouter.get('/order_menu_items', authenticateAdmin, getOrderMenuItem);
+orderMenuItemRouter.get('/list-order-menu-items', authenticateAdmin, getOrderMenuItem);
 
 // Get a single OrderMenuItem
-orderMenuItemRouter.get("/order_menu_items/:id",authenticateBoth, getOrderMenuItem);
+orderMenuItemRouter.get("/order-menu-items/:id",authenticateBoth, getOrderMenuItem);
 
 // Create a OrderMenuItem
 orderMenuItemRouter.post("/order_menu_items", 
@@ -21,7 +21,7 @@ orderMenuItemRouter.post("/order_menu_items",
     authenticateAdmin, createOrderMenuItem);
 
 // Update a OrderMenuItem
-orderMenuItemRouter.put("/order_menu_items/:id", authenticateAdmin, updateOrderMenuItem);
+orderMenuItemRouter.put("/update-order-menu-items/:id", authenticateAdmin, updateOrderMenuItem);
 
 // Delete a OrderMenuItem
-orderMenuItemRouter.delete("/order_menu_items/:id",authenticateAdmin, deleteOrderMenuItem);
+orderMenuItemRouter.delete("/delete-order-menu-items/:id",authenticateAdmin, deleteOrderMenuItem);

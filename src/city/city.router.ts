@@ -9,11 +9,11 @@ export const cityRouter = new Hono();
 // Get a single city by ID: api/cities/1
 cityRouter.get("/cities/:id", authenticateBoth, getCity);
 
-cityRouter.get("/cities", authenticateBoth, listCity);
+cityRouter.get("/list-cities", authenticateBoth, listCity);
 
 // Create a city
 cityRouter.post(
-  "/cities",
+  "/create-cities",
   zValidator("json", citySchema, (result, c) => {
     if (!result.success) {
       return c.json(result.error, 400);
@@ -23,7 +23,7 @@ cityRouter.post(
 );
 
 // Update a city by ID
-cityRouter.put("/cities/:id",authenticateAdmin, updateCity);
+cityRouter.put("/update-cities/:id",authenticateAdmin, updateCity);
 
 // Delete a city by ID
-cityRouter.delete("/cities/:id",authenticateAdmin, deleteCity);
+cityRouter.delete("/delete-cities/:id",authenticateAdmin, deleteCity);

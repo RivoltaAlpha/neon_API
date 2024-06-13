@@ -6,13 +6,13 @@ import { authenticateBoth, authenticateAdmin } from "../middleware/auth";
 
 export const commentRouter = new Hono();
 //list all 
-commentRouter.get('/comments', listComments);
+commentRouter.get('/list-comments', listComments);
 
 // Get a single Comment
 commentRouter.get("/comments/:id", authenticateBoth, getComment);
 
 // Create a Comment
-commentRouter.post("/comments",
+commentRouter.post("/create-comments",
     zValidator("json", commentSchema, (result, c) => {
         if (!result.success) {
           return c.json(result.error, 400);
@@ -21,7 +21,7 @@ commentRouter.post("/comments",
       authenticateBoth, createComment);
 
 // Update a Comment
-commentRouter.put("/comments/:id", authenticateBoth, updateComment);
+commentRouter.put("/update-comments/:id", authenticateBoth, updateComment);
 
 // Delete a Comment
-commentRouter.delete("/comments/:id", authenticateBoth, deleteComment);
+commentRouter.delete("/delete-comments/:id", authenticateBoth, deleteComment);

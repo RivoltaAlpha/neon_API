@@ -12,23 +12,25 @@ import {
   listOtherAssociatedServices
 } from "./orders.services";
 
-// List all orders with related details
+// List orders with related details or a specific order by ID
 export const listOtherOrderDetails = async (c: Context) => {
   try {
-    const limit = Number(c.req.query('limit'));
+    const limit = c.req.query('limit') ? Number(c.req.query('limit')) : undefined;
+    const orderId = c.req.query('orderId') ? Number(c.req.query('orderId')) : undefined;
 
-    const data = await listOtherAssociatedServices(limit);
-    if (data == null || data.length == 0) {
+    const data = await listOtherAssociatedServices(orderId, limit);
+    if (data == null || data.length === 0) {
       return c.text("Orders not found", 404);
     }
     return c.json(data, 200);
   } catch (error: any) {
+    console.error("Error in listOtherOrderDetails:", error);
     return c.json({ error: error?.message }, 400);
   }
-}
+};
 
 //get all
-export const listUsers = async (c: Context) => {
+export const listOrders = async (c: Context) => {
   try {
       //limit the number of users to be returned
 

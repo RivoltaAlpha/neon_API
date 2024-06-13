@@ -6,13 +6,13 @@ import { authenticateUser, authenticateBoth, authenticateAdmin } from "../middle
 
 export const menuItemRouter = new Hono();
 //list all
-menuItemRouter.get('/menu_items', authenticateBoth, listUsers);
+menuItemRouter.get('/list-menu-items', authenticateBoth, listUsers);
 
 // Get a single MenuItem
-menuItemRouter.get("/menu_items/:id", authenticateBoth, getMenuItem);
+menuItemRouter.get("/menu-item/:id", authenticateBoth, getMenuItem);
 
 // Create a MenuItem
-menuItemRouter.post("/menu_items",
+menuItemRouter.post("/create-menu-items",
     zValidator("json", menu_itemSchema, (result, c) => {
         if (!result.success) {
           return c.json(result.error, 400);
@@ -21,7 +21,7 @@ menuItemRouter.post("/menu_items",
     authenticateAdmin ,createMenuItem);
 
 // Update a MenuItem
-menuItemRouter.put("/menu_items/:id", authenticateAdmin, updateMenuItem);
+menuItemRouter.put("/update-menu-items/:id", authenticateAdmin, updateMenuItem);
 
 // Delete a MenuItem
-menuItemRouter.delete("/menu_items/:id", authenticateAdmin, deleteMenuItem)
+menuItemRouter.delete("/delete-menu-items/:id", authenticateAdmin, deleteMenuItem)

@@ -6,13 +6,13 @@ import { authenticateAdmin, authenticateBoth } from "../middleware/auth";
 
 export const orderStatusRouter = new Hono();
 //list  all
-orderStatusRouter.get('/order_statuses', authenticateBoth, listOrderStatus);
+orderStatusRouter.get('/list-order-statuses', authenticateBoth, listOrderStatus);
 
 // Get a single OrderStatus
-orderStatusRouter.get("/order_statuses/:id", authenticateBoth, getOrderStatus);
+orderStatusRouter.get("/order-statuses/:id", authenticateAdmin, getOrderStatus);
 
 // Create a OrderStatus
-orderStatusRouter.post("/order_statuses",
+orderStatusRouter.post("/create-order_statuses",
     zValidator("json", order_statusSchema, (result, c) => {
         if (!result.success) {
           return c.json(result.error, 400);
@@ -21,7 +21,7 @@ orderStatusRouter.post("/order_statuses",
    authenticateAdmin, createOrderStatus);
 
 // Update a OrderStatus
-orderStatusRouter.put("/order_statuses/:id",authenticateAdmin, updateOrderStatus);
+orderStatusRouter.put("/update-order-statuses/:id",authenticateAdmin, updateOrderStatus);
 
 // Delete a OrderStatus
-orderStatusRouter.delete("/order_statuses/:id",authenticateAdmin, deleteOrderStatus);
+orderStatusRouter.delete("/delete-order-statuses/:id",authenticateAdmin, deleteOrderStatus);

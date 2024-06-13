@@ -12,14 +12,14 @@ import { authenticateBoth, authenticateAdmin } from "../middleware/auth";
 
 export const addressRouter = new Hono();
 // list all
-addressRouter.get("/addresses", authenticateBoth, listAddresses);
+addressRouter.get("/list-addresses", authenticateBoth, listAddresses);
 
 // Get a single Address
 addressRouter.get("/addresses/:id", authenticateBoth, getAddress);
 
 // Create an Address
 addressRouter.post(
-  "/addresses",
+  "/create-address",
   zValidator("json", addressSchema, (result, c) => {
     if (!result.success) {
       return c.json(result.error, 400);
@@ -29,7 +29,7 @@ addressRouter.post(
 );
 
 // Update an Address
-addressRouter.put("/addresses/:id", authenticateAdmin, updateAddress);
+addressRouter.put("/update-addresses/:id", authenticateAdmin, updateAddress);
 
 // Delete an Address
-addressRouter.delete("/addresses/:id", authenticateAdmin, deleteAddress);
+addressRouter.delete("/delete-addresses/:id", authenticateAdmin, deleteAddress);

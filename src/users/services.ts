@@ -45,7 +45,9 @@ export async function getUserOrders(id: TSOrder['id']): Promise<any[]> {
                 order_date: orders.delivery_address_id
             }
     } 
-    ).from(orders).where(eq(orders.user_id, id));
+    ).from(orders)
+    .innerJoin(users, eq(orders.user_id, users.id))
+    .where(eq(orders.user_id, id));
 }
 
 export async function getUserComments(id: TSComment['id']): Promise<any[]> {
@@ -55,7 +57,9 @@ export async function getUserComments(id: TSComment['id']): Promise<any[]> {
             user: users.name,
             text: comment.comment
         },
-    }).from(comment).where(eq(comment.user_id, id));
+    }).from(comment)
+    .innerJoin(users, eq(comment.user_id, users.id))
+    .where(eq(comment.user_id, id));
 }
 
 export async function getUserOwnedRestaurants(id: TSRestaurantOwner['owner_id']): Promise<any[]> {

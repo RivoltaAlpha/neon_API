@@ -12,7 +12,7 @@ statusRouter.get("/status-catalog/:id", authenticateBoth, getService);
 
 // Apply authenticateAdmin middleware to these routes
 statusRouter.post(
-  "/states",
+  "/create-status-category",
   zValidator("json", status_catalogSchema, (result, c) => {
     if (!result.success) {
       return c.json(result.error, 400);
@@ -23,7 +23,7 @@ statusRouter.post(
 );
 
 // Update a state by ID
-statusRouter.put("/states/:id", authenticateAdmin, updateService);
+statusRouter.put("/update-status-category/:id", authenticateAdmin, updateService);
 
 // Delete a state by ID
-statusRouter.delete("/states/:id", authenticateAdmin, deleteService);
+statusRouter.delete("/delete-status-category/:id", authenticateAdmin, deleteService);

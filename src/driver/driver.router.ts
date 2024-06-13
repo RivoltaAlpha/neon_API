@@ -6,13 +6,13 @@ import { authenticateAdmin, authenticateBoth } from "../middleware/auth";
 
 export const driverRouter = new Hono();
 //list all
-driverRouter.get('/drivers', authenticateBoth, listDrivers);
+driverRouter.get('/list-drivers', authenticateBoth, listDrivers);
 
 // Get a single Driver
 driverRouter.get("/drivers/:id", authenticateBoth, getDriver);
 
 // Create a Driver
-driverRouter.post("/drivers",
+driverRouter.post("/create-drivers",
     zValidator("json", driverSchema, (result, c) => {
         if (!result.success) {
             return c.json(result.error ,400);
@@ -21,7 +21,7 @@ driverRouter.post("/drivers",
     authenticateAdmin, createDriver);
 
 // Update a Driver
-driverRouter.put("/drivers/:id",authenticateAdmin, updateDriver);
+driverRouter.put("/update-drivers/:id",authenticateAdmin, updateDriver);
 
 // Delete a Driver
-driverRouter.delete("/drivers/:id" ,authenticateAdmin, deleteDriver);
+driverRouter.delete("/delete-drivers/:id" ,authenticateAdmin, deleteDriver);
