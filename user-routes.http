@@ -14,8 +14,6 @@ Content-Type: application/json
 ###user applicetions
 ###
 GET  http://localhost:8000/api/user/1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKYWNrc29uIiwicm9sZSI6InVzZXIiLCJleHAiOjE3MTgyOTYzMDF9.zqE7ZpYL7_AnNuoF0yh54BGAhtfYHdamyNyAquhNTVg
-
 ###
 GET  http://localhost:8000/api/users
 
@@ -29,6 +27,7 @@ GET  http://localhost:8000/api/user/1/comments
 
 ###
 GET  http://localhost:8000/api/users/1/owned-restaurants
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKYWNrc29uIiwicm9sZSI6InVzZXIiLCJleHAiOjE3MTgzODQ0Mzd9.SFJbXrwxOtAAulcsloWH_2FNLA8UmwUF8nQ5YlNApiw
 
 ###state 
 ###
