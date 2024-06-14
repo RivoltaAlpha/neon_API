@@ -44,7 +44,7 @@ app.use("*", registerMetrics);
 // Default routes
 app.get("/welcome", async (c) => {
   try {
-    const filePath = path.join(__dirname, 'index.html');
+    const filePath = path.join(__dirname, './index.html');
     const fileContent = await fs.promises.readFile(filePath, 'utf8');
     return c.html(fileContent);
   } catch (err) {
