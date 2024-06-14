@@ -7,6 +7,8 @@ import { trimTrailingSlash } from "hono/trailing-slash";
 import { timeout } from "hono/timeout";
 import { HTTPException } from "hono/http-exception";
 import { prometheus } from "@hono/prometheus";
+import fs from "fs";
+import path from "path";
 
 import { authRouter } from "./auth/auth.router";
 import { userRouter } from "./users/routers";
@@ -40,28 +42,16 @@ app.use("/", timeout(10000, customTimeoutException));
 app.use("*", registerMetrics);
 
 // Default routes
-app.get("/welcome", (c) => {
-  const welcomeMessage = `
-    <html>
-      <head>
-        <title>Welcome to Our API</title>
-        <style>
-          body { font-family: Arial, sans-serif; background-color:hsl(240, 100%, 90%); text-align: center; padding: 50px; }
-          h1 { color: black; }
-          p { color: #666; }
-          .emoji { font-size: 2em; }
-        </style>
-      </head>
-      <body>
-        <div class="emoji">😏😏😌😌😌😲</div>
-        <h1>Welcome to Our API Tiffany 😎</h1>
-        <p>Your API is running smoothly!</p>
-        <p>Explore the available endpoints and enjoy the features.</p>
-      </body>
-    </html>
-  `;
-  return c.html(welcomeMessage);
+app.get("/welcome", async (c) => {
+  try {
+    const filePath = path.join(__dirname, 'index.html');
+    const fileContent = await fs.promises.readFile(filePath, 'utf8');
+    return c.html(fileContent);
+  } catch (err) {
+    return c.text("Error reading welcome file", 500);
+  }
 });
+
 app.notFound((c) => {
   return c.text("Route Not Found", 404);
 });
