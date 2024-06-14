@@ -7,7 +7,7 @@ import { trimTrailingSlash } from "hono/trailing-slash";
 import { timeout } from "hono/timeout";
 import { HTTPException } from "hono/http-exception";
 import { prometheus } from "@hono/prometheus";
-import fs from "fs";
+import {readFile} from "fs/promises";
 import path from "path";
 
 import { authRouter } from "./auth/auth.router";
@@ -41,14 +41,13 @@ app.use("/", timeout(10000, customTimeoutException));
 //3rd party middlewares
 app.use("*", registerMetrics);
 
-// Default routes
-app.get("/welcome", async (c) => {
+//default routes
+app.get('/', async (c) => {
   try {
-    const filePath = path.join(__dirname, './index.html');
-    const fileContent = await fs.promises.readFile(filePath, 'utf8');
-    return c.html(fileContent);
-  } catch (err) {
-    return c.text("Error reading welcome file", 500);
+      let html = await readFile('./index.html', 'utf-8');
+      return c.html(html);
+  } catch (err:any) {
+      return c.text(err.message, 500);
   }
 });
 
