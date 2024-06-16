@@ -78,24 +78,24 @@ app.route("/", commentRouter);
 app.route("/", categoryRouter);
 app.route("/", ownersRouter);
 
-// src/index.ts
-import { sendWelcomeEmail } from './emailing/email';
+// // src/index.ts
+// import { sendWelcomeEmail } from './emailing/email';
 
-// Simulate a user registration event
-const onUserRegistered = async (email: string) => {
-  const subject = 'Welcome to Our Service!';
-  const text = 'Thank you for registering with our service. We are excited to have you on board!';
+// // Simulate a user registration event
+// const onUserRegistered = async (email: string) => {
+//   const subject = 'Welcome to Our Service!';
+//   const text = 'Thank you for registering with our service. We are excited to have you on board!';
 
-  await sendWelcomeEmail(email, subject, text);
-};
+//   await sendWelcomeEmail(email, subject, text);
+// };
 
-// Simulate a new user registration
-const newUserEmail = 'mwanikitiffany25@gmail.com';
-onUserRegistered(newUserEmail).then(() => {
-  console.log('User registration email sent successfully.');
-}).catch(error => {
-  console.error('Failed to send registration email: ', error);
-});
+// // Simulate a new user registration
+// const newUserEmail = 'mwanikitiffany25@gmail.com';
+// onUserRegistered(newUserEmail).then(() => {
+//   console.log('User registration email sent successfully.');
+// }).catch(error => {
+//   console.error('Failed to send registration email: ', error);
+// });
 
 
 serve({

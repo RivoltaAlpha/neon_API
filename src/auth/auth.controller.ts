@@ -15,8 +15,12 @@ export const registerUser = async (c: Context) => {
     const createdUser = await authUserService(user);
     if (!createdUser) return c.text("User not created😭😭", 404);
 
+    // Send welcome email after successful user creation
+    const subject = "Welcome to Our Restaurant API System";
+    const text = `Hello ${user.username},\nWelcome to our system!`;
+    await sendWelcomeEmail(user.email, subject, text);
+
     return c.json({ msg: createdUser }, 201);
-    
   } catch (error: any) {
     return c.json({ error: error?.message }, 500);
   }

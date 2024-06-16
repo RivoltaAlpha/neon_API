@@ -46,3 +46,5 @@ export const authMiddleware = async (c:Context & {req: HonoContext<any> }, next:
 export const authenticateAdmin = async  (c: Context, next: Next) => await authMiddleware(c, next, "admin")
 export const authenticateUser = async  (c: Context, next: Next) => await authMiddleware(c, next, "user")
 export const authenticateBoth = async  (c: Context, next: Next) => await authMiddleware(c, next, "both")
+export const authenticateDriver = async  (c: Context, next: Next) => await authMiddleware(c, next, "driver")
+export const authenticateOwner = async  (c: Context, next: Next) => await authMiddleware(c, next, "restaurant_owner")

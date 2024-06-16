@@ -213,7 +213,7 @@ export const usersRelations = relations(users, ({ many }) => ({
     drivers: many(driver),
 }));
 
-export const roleEnum = pgEnum("role", ["admin", "user", "both"])
+export const roleEnum = pgEnum("role", ["admin", "user", "both", "driver", "restaurant_owner"])
 
 // The auth_user table schema
 export const authUser = pgTable('auth_user', {
