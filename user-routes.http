@@ -7,10 +7,10 @@ POST  http://localhost:8000/api/auth/register
 Content-Type: application/json
 
 {
-  "userId": 2,
-  "username": "Tyfan",
-  "name": "Tyfan User",
-  "email": "mwanikitiffany@gmail.com",
+  "userId": 1,
+  "username": "Tyla",
+  "name": "Mwaniki Tiffany",
+  "email": "mwanikitiffany25@gmail.com",
   "contact_phone": "1234567890",
   "password": "pass",
   "confirmation_code": "someconfirmationcode",
