@@ -3,12 +3,26 @@ GET http://localhost:8000/api/welcome
 
 
 ###
+POST  http://localhost:8000/api/auth/register
+Content-Type: application/json
+
+{
+  "user_id": 4,
+  "username": "Tyfan",
+  "email": "mwanikitiffany25@gmail.com",
+  "password": "yourpassword",
+  "role": "user"
+}
+
+
+###
 POST  http://localhost:8000/api/auth/login
 Content-Type: application/json
 
 {
-    "username": "Jackson",
+    "username": "Py",
     "password": "pass"
+
 }
 
 ###user applicetions

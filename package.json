@@ -24,7 +24,9 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.17",
+    "@types/nodemailer": "^6.4.15",
     "drizzle-kit": "^0.22.6",
+    "ts-node": "^10.9.2",
     "tsx": "^4.7.1",
     "typescript": "^5.4.5"
   }

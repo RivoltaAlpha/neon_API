@@ -8,22 +8,6 @@ export const authUserService = async (user: TIAuthUser): Promise<string | null> 
     return "User created successfully";
 }
 
-// export const loginAuthService = async (user: TSAuthUser) => {
-//     const { username, password } = user;
-//     const data = await db.select().from(authUser).where(eq(authUser.userId, userId));
-    
-//     if (data.length > 0) {
-//         const isPasswordValid = await bcrypt.compare(password, data[0].password);
-//         if (isPasswordValid) {
-//             return "logged in";
-//         } else {
-//             return "password incorrect";
-//         }
-//     } else {
-//         return "user not found";
-//     }
-// }
-
 export const loginAuthService = async (user: TSAuthUser) => {
     const { username, password } = user;
     return await db.query.authUser.findFirst({
