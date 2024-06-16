@@ -111,8 +111,12 @@ export const loginUserShema = z.object({
 });
 export const registerUserShema = z.object({
     userId: z.number(),
-    password: z.string(),
     username: z.string(),
+    name: z.string(),
+    email: z.string(),
+    contact_phone: z.string(),
+    password: z.string(),
+    confirmation_code: z.string(),
     role: z.string().optional(),
 });
 

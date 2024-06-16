@@ -7,13 +7,15 @@ POST  http://localhost:8000/api/auth/register
 Content-Type: application/json
 
 {
-  "user_id": 4,
+  "userId": 2,
   "username": "Tyfan",
-  "email": "mwanikitiffany25@gmail.com",
-  "password": "yourpassword",
+  "name": "Tyfan User",
+  "email": "mwanikitiffany@gmail.com",
+  "contact_phone": "1234567890",
+  "password": "pass",
+  "confirmation_code": "someconfirmationcode",
   "role": "user"
 }
-
 
 ###
 POST  http://localhost:8000/api/auth/login
