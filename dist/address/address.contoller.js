@@ -1,7 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteAddress = exports.updateAddress = exports.createAddress = exports.getAddress = void 0;
+exports.deleteAddress = exports.updateAddress = exports.createAddress = exports.getAddress = exports.listAddresses = void 0;
 const address_services_1 = require("./address.services");
+//get all
+const listAddresses = async (c) => {
+    try {
+        //limit the number of users to be returned
+        const limit = Number(c.req.query('limit'));
+        const data = await (0, address_services_1.listService)(limit);
+        if (data == null || data.length == 0) {
+            return c.text("User not found", 404);
+        }
+        return c.json(data, 200);
+    }
+    catch (error) {
+        return c.json({ error: error?.message }, 400);
+    }
+};
+exports.listAddresses = listAddresses;
 // Get Address
 const getAddress = async (c) => {
     try {

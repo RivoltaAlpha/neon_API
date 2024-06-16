@@ -1,7 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteDriver = exports.updateDriver = exports.createDriver = exports.getDriver = void 0;
+exports.deleteDriver = exports.updateDriver = exports.createDriver = exports.getDriver = exports.listDrivers = void 0;
 const driver_services_1 = require("./driver.services");
+//get all
+const listDrivers = async (c) => {
+    try {
+        //limit the number of users to be returned
+        const limit = Number(c.req.query('limit'));
+        const data = await (0, driver_services_1.listService)(limit);
+        if (data == null || data.length == 0) {
+            return c.text("User not found", 404);
+        }
+        return c.json(data, 200);
+    }
+    catch (error) {
+        return c.json({ error: error?.message }, 400);
+    }
+};
+exports.listDrivers = listDrivers;
 // Get Driver
 const getDriver = async (c) => {
     try {

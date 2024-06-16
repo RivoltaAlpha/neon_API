@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getComments = exports.getOrders = exports.deleteUser = exports.updateUser = exports.createUser = exports.getUser = exports.listUsers = void 0;
+exports.getAllUserDetails = exports.getUserOwnedRestaurantsController = exports.getComments = exports.getOrders = exports.deleteUser = exports.updateUser = exports.createUser = exports.getUser = exports.listUsers = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const services_1 = require("./services");
 const listUsers = async (c) => {
@@ -130,3 +130,37 @@ const getComments = async (c) => {
     }
 };
 exports.getComments = getComments;
+const getUserOwnedRestaurantsController = async (c) => {
+    try {
+        const id = parseInt(c.req.param("id"));
+        if (isNaN(id))
+            return c.text("Invalid ID", 400);
+        const restaurants = await (0, services_1.getUserOwnedRestaurants)(id);
+        if (restaurants.length === 0) {
+            return c.text("No restaurants found for this user", 404);
+        }
+        return c.json(restaurants, 200);
+    }
+    catch (error) {
+        return c.json({ error: error?.message }, 500);
+    }
+};
+exports.getUserOwnedRestaurantsController = getUserOwnedRestaurantsController;
+// Get order by ID
+const getAllUserDetails = async (c) => {
+    try {
+        const id = parseInt(c.req.param("id"));
+        if (isNaN(id))
+            return c.text("Invalid ID", 400);
+        const user = await (0, services_1.getUserDetails)(id);
+        if (user === null) {
+            return c.text("User not found", 404);
+        }
+        return c.json(user, 200);
+    }
+    catch (error) {
+        console.error(error?.message);
+        return c.json({ error: error?.message }, 500);
+    }
+};
+exports.getAllUserDetails = getAllUserDetails;

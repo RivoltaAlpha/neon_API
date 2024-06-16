@@ -1,9 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteRestaurantOwnerService = exports.updateRestaurantOwnerService = exports.createRestaurantOwnerService = exports.getRestaurantOwnerService = void 0;
+exports.getUserOwnedRestaurants = exports.deleteRestaurantOwnerService = exports.updateRestaurantOwnerService = exports.createRestaurantOwnerService = exports.getRestaurantOwnerService = exports.listService = void 0;
 const db_1 = require("../drizzle/db");
 const schema_1 = require("../drizzle/schema");
 const drizzle_orm_1 = require("drizzle-orm");
+const listService = async (limit) => {
+    if (limit) {
+        return await db_1.db.query.restaurant_owner.findMany({
+            limit: limit
+        });
+    }
+    return await db_1.db.query.restaurant_owner.findMany();
+};
+exports.listService = listService;
 async function getRestaurantOwnerService(id) {
     return db_1.db.select().from(schema_1.restaurant_owner).where((0, drizzle_orm_1.eq)(schema_1.restaurant_owner.owner_id, id));
 }
@@ -27,3 +36,34 @@ const deleteRestaurantOwnerService = async (restaurant_id, owner_id) => {
     return "Restaurant Owner relationship deleted successfully";
 };
 exports.deleteRestaurantOwnerService = deleteRestaurantOwnerService;
+async function getUserOwnedRestaurants(id) {
+    return await db_1.db.query.restaurant_owner.findMany({
+        where: (fields, { eq }) => eq(fields.owner_id, id),
+        columns: {
+            restaurant_id: true,
+        },
+        with: {
+            restaurant: {
+                columns: {
+                    name: true,
+                    city_id: true,
+                },
+                with: {
+                    city: {
+                        columns: {
+                            name: true,
+                        },
+                        with: {
+                            state: {
+                                columns: {
+                                    name: true,
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    });
+}
+exports.getUserOwnedRestaurants = getUserOwnedRestaurants;

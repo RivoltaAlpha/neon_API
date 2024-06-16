@@ -1,22 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteRestaurantOwner = exports.updateRestaurantOwner = exports.createRestaurantOwner = exports.getRestaurantOwner = void 0;
+exports.getUserOwnedRestaurantsController = exports.deleteRestaurantOwner = exports.updateRestaurantOwner = exports.createRestaurantOwner = exports.getRestaurantOwner = exports.listOwners = void 0;
 const owners_services_1 = require("./owners.services");
-// Get RestaurantOwner
-const getRestaurantOwner = async (c) => {
+//list all
+const listOwners = async (c) => {
     try {
-        const restaurant_id = parseInt(c.req.param("restaurant_id"));
-        const owner_id = parseInt(c.req.param("owner_id"));
-        if (isNaN(restaurant_id) || isNaN(owner_id))
-            return c.text("Invalid ID", 400);
-        const restaurantOwner = await (0, owners_services_1.getRestaurantOwnerService)(owner_id);
-        if (restaurantOwner === null) {
-            return c.text("Restaurant Owner relationship not found", 404);
+        const limit = Number(c.req.query('limit'));
+        const data = await (0, owners_services_1.listService)(limit);
+        if (data == null || data.length == 0) {
+            return c.text("User not found", 404);
         }
-        return c.json(restaurantOwner, 200);
+        return c.json(data, 200);
     }
     catch (error) {
-        console.error(error?.message);
+        return c.json({ error: error?.message }, 400);
+    }
+};
+exports.listOwners = listOwners;
+// Get a single restaurant owner by ID
+const getRestaurantOwner = async (c) => {
+    try {
+        const id = parseInt(c.req.param("id"));
+        if (isNaN(id))
+            return c.text("Invalid ID", 400);
+        const owner = await (0, owners_services_1.getRestaurantOwnerService)(id);
+        if (owner.length === 0) {
+            return c.text("Restaurant Owner not found", 404);
+        }
+        return c.json(owner, 200);
+    }
+    catch (error) {
         return c.json({ error: error?.message }, 500);
     }
 };
@@ -64,3 +77,19 @@ const deleteRestaurantOwner = async (c) => {
     }
 };
 exports.deleteRestaurantOwner = deleteRestaurantOwner;
+const getUserOwnedRestaurantsController = async (c) => {
+    try {
+        const id = parseInt(c.req.param("id"));
+        if (isNaN(id))
+            return c.text("Invalid ID", 400);
+        const restaurants = await (0, owners_services_1.getUserOwnedRestaurants)(id);
+        if (restaurants.length === 0) {
+            return c.text("No restaurants found for this user", 404);
+        }
+        return c.json(restaurants, 200);
+    }
+    catch (error) {
+        return c.json({ error: error?.message }, 500);
+    }
+};
+exports.getUserOwnedRestaurantsController = getUserOwnedRestaurantsController;

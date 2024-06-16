@@ -7,17 +7,17 @@ const zod_validator_1 = require("@hono/zod-validator");
 const validator_1 = require("../validator");
 const auth_1 = require("../middleware/auth");
 exports.commentRouter = new hono_1.Hono();
-// auths
-exports.commentRouter.use('*', auth_1.authenticateAdmin);
+//list all 
+exports.commentRouter.get('/list-comments', comments_contoller_1.listComments);
 // Get a single Comment
-exports.commentRouter.get("/comments/:id", auth_1.authenticateUser, comments_contoller_1.getComment);
+exports.commentRouter.get("/comments/:id", auth_1.authenticateBoth, comments_contoller_1.getComment);
 // Create a Comment
-exports.commentRouter.post("/comments", (0, zod_validator_1.zValidator)("json", validator_1.commentSchema, (result, c) => {
+exports.commentRouter.post("/create-comments", (0, zod_validator_1.zValidator)("json", validator_1.commentSchema, (result, c) => {
     if (!result.success) {
         return c.json(result.error, 400);
     }
-}), auth_1.authenticateUser, comments_contoller_1.createComment);
+}), auth_1.authenticateBoth, comments_contoller_1.createComment);
 // Update a Comment
-exports.commentRouter.put("/comments/:id", auth_1.authenticateUser, comments_contoller_1.updateComment);
+exports.commentRouter.put("/update-comments/:id", auth_1.authenticateBoth, comments_contoller_1.updateComment);
 // Delete a Comment
-exports.commentRouter.delete("/comments/:id", auth_1.authenticateUser, comments_contoller_1.deleteComment);
+exports.commentRouter.delete("/delete-comments/:id", auth_1.authenticateBoth, comments_contoller_1.deleteComment);

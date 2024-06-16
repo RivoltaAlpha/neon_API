@@ -1,27 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginAuthService = exports.authUserService = void 0;
+exports.authUserService = exports.loginAuthService = void 0;
 const db_1 = require("../drizzle/db");
 const drizzle_orm_1 = require("drizzle-orm");
 const schema_1 = require("../drizzle/schema");
-const authUserService = async (user) => {
-    await db_1.db.insert(schema_1.authUser).values(user);
-    return "User created successfully";
-};
-exports.authUserService = authUserService;
-// export const loginAuthService = async (user: TSAuthUser) => {
-//     const { username, password } = user;
-//     const data = await db.select().from(authUser).where(eq(authUser.userId, userId));
-//     if (data.length > 0) {
-//         const isPasswordValid = await bcrypt.compare(password, data[0].password);
-//         if (isPasswordValid) {
-//             return "logged in";
-//         } else {
-//             return "password incorrect";
-//         }
-//     } else {
-//         return "user not found";
-//     }
+// export const authUserService = async (user: TIAuthUser): Promise<string | null> => {
+//     await db.insert(authUser).values(user)
+//     return "User created successfully";
 // }
 const loginAuthService = async (user) => {
     const { username, password } = user;
@@ -44,3 +29,34 @@ const loginAuthService = async (user) => {
     });
 };
 exports.loginAuthService = loginAuthService;
+const authUserService = async (user) => {
+    try {
+        // Insert user into `users` table
+        const createdUser = await db_1.db.insert(schema_1.users).values({
+            name: user.name,
+            contact_phone: user.contact_phone,
+            phone_verified: false,
+            email: user.email,
+            email_verified: false,
+            confirmation_code: user.confirmation_code,
+            password: user.password,
+            created_at: (0, drizzle_orm_1.sql) `now()`,
+            updated_at: (0, drizzle_orm_1.sql) `now()`
+        }).returning();
+        // Extract the created user ID
+        const userId = createdUser[0].id;
+        // Insert user into `auth_user` table
+        await db_1.db.insert(schema_1.authUser).values({
+            userId,
+            password: user.password,
+            username: user.username,
+            role: user.role || 'user'
+        });
+        return createdUser[0]; // Return the created user
+    }
+    catch (error) {
+        console.error('Error creating user:', error);
+        throw new Error('User creation failed');
+    }
+};
+exports.authUserService = authUserService;

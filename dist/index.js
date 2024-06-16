@@ -9,6 +9,7 @@ const trailing_slash_1 = require("hono/trailing-slash");
 const timeout_1 = require("hono/timeout");
 const http_exception_1 = require("hono/http-exception");
 const prometheus_1 = require("@hono/prometheus");
+const promises_1 = require("fs/promises");
 const auth_router_1 = require("./auth/auth.router");
 const routers_1 = require("./users/routers");
 const restaurant_router_1 = require("./restaurants/restaurant.router");
@@ -37,8 +38,14 @@ app.use("/", (0, timeout_1.timeout)(10000, customTimeoutException));
 //3rd party middlewares
 app.use("*", registerMetrics);
 //default routes
-app.get("/welcome", (c) => {
-    return c.text("Your API is  Running😏😏😌😌😌😲");
+app.get('/', async (c) => {
+    try {
+        let html = await (0, promises_1.readFile)('./index.html', 'utf-8');
+        return c.html(html);
+    }
+    catch (err) {
+        return c.text(err.message, 500);
+    }
 });
 app.notFound((c) => {
     return c.text("Route Not Found", 404);
@@ -64,6 +71,21 @@ app.route("/", status_routes_1.statusRouter);
 app.route("/", comments_routers_1.commentRouter);
 app.route("/", category_routers_1.categoryRouter);
 app.route("/", owners_routers_1.ownersRouter);
+// // src/index.ts
+// import { sendWelcomeEmail } from './emailing/email';
+// // Simulate a user registration event
+// const onUserRegistered = async (email: string) => {
+//   const subject = 'Welcome to Our Service!';
+//   const text = 'Thank you for registering with our service. We are excited to have you on board!';
+//   await sendWelcomeEmail(email, subject, text);
+// };
+// // Simulate a new user registration
+// const newUserEmail = 'mwanikitiffany25@gmail.com';
+// onUserRegistered(newUserEmail).then(() => {
+//   console.log('User registration email sent successfully.');
+// }).catch(error => {
+//   console.error('Failed to send registration email: ', error);
+// });
 (0, node_server_1.serve)({
     fetch: app.fetch,
     port: Number(process.env.PORT) || 3000,

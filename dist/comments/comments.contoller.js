@@ -1,7 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteComment = exports.updateComment = exports.createComment = exports.getComment = void 0;
+exports.deleteComment = exports.updateComment = exports.createComment = exports.getComment = exports.listComments = void 0;
 const comments_services_1 = require("./comments.services");
+//get all
+const listComments = async (c) => {
+    try {
+        //limit the number of users to be returned
+        const limit = Number(c.req.query('limit'));
+        const data = await (0, comments_services_1.listService)(limit);
+        if (data == null || data.length == 0) {
+            return c.text("User not found", 404);
+        }
+        return c.json(data, 200);
+    }
+    catch (error) {
+        return c.json({ error: error?.message }, 400);
+    }
+};
+exports.listComments = listComments;
 // Get Comment
 const getComment = async (c) => {
     try {

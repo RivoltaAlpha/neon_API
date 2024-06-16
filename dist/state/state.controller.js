@@ -1,7 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteState = exports.updateState = exports.createState = exports.getState = exports.listStates = void 0;
+exports.deleteState = exports.updateState = exports.createState = exports.getState = exports.listStates = exports.listCitiesInStateController = void 0;
 const state_services_1 = require("./state.services");
+const listCitiesInStateController = async (c) => {
+    try {
+        const stateId = parseInt(c.req.param("id"));
+        console.log("State ID Parameter😒:", stateId);
+        if (isNaN(stateId) || stateId <= 0) {
+            console.log("Invalid State ID:", stateId);
+            return c.text("Invalid state ID", 400);
+        }
+        const cities = await (0, state_services_1.listCitiesInState)(stateId);
+        return c.json(cities, 200);
+    }
+    catch (error) {
+        console.error(error?.message);
+        return c.json({ error: error?.message }, 500);
+    }
+};
+exports.listCitiesInStateController = listCitiesInStateController;
 const listStates = async (c) => {
     try {
         //limit the number of users to be returned

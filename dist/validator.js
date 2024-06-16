@@ -96,7 +96,11 @@ exports.loginUserShema = zod_1.z.object({
 });
 exports.registerUserShema = zod_1.z.object({
     userId: zod_1.z.number(),
-    password: zod_1.z.string(),
     username: zod_1.z.string(),
+    name: zod_1.z.string(),
+    email: zod_1.z.string(),
+    contact_phone: zod_1.z.string(),
+    password: zod_1.z.string(),
+    confirmation_code: zod_1.z.string(),
     role: zod_1.z.string().optional(),
 });

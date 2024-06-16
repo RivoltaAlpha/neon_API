@@ -7,17 +7,17 @@ const zod_validator_1 = require("@hono/zod-validator");
 const validator_1 = require("../validator");
 const auth_1 = require("../middleware/auth");
 exports.categoryRouter = new hono_1.Hono();
-// Apply authenticateUser middleware to all routes
-exports.categoryRouter.use('*', auth_1.authenticateAdmin);
+// list all categories
+exports.categoryRouter.get('/list-categories', auth_1.authenticateBoth, category_controller_1.listCategories);
 // Get a single Category
-exports.categoryRouter.get("/categories/:id", auth_1.authenticateUser, category_controller_1.getCategory);
+exports.categoryRouter.get("/categories/:id", auth_1.authenticateBoth, category_controller_1.getCategory);
 // Create a Category
-exports.categoryRouter.post("/categories", (0, zod_validator_1.zValidator)("json", validator_1.categorySchema, (result, c) => {
+exports.categoryRouter.post("/create-categories", (0, zod_validator_1.zValidator)("json", validator_1.categorySchema, (result, c) => {
     if (!result.success) {
         return c.json(result.error, 400);
     }
-}), category_controller_1.createCategory);
+}), auth_1.authenticateAdmin, category_controller_1.createCategory);
 // Update a Category
-exports.categoryRouter.put("/categories/:id", category_controller_1.updateCategory);
+exports.categoryRouter.put("/update-categories/:id", auth_1.authenticateAdmin, category_controller_1.updateCategory);
 // Delete a Category
-exports.categoryRouter.delete("/categories/:id", category_controller_1.deleteCategory);
+exports.categoryRouter.delete("/delete-categories/:id", auth_1.authenticateAdmin, category_controller_1.deleteCategory);

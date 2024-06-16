@@ -3,10 +3,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCategoryService = exports.updateCategoryService = exports.createCategoryService = exports.getCategoryService = void 0;
+exports.deleteCategoryService = exports.updateCategoryService = exports.createCategoryService = exports.getCategoryService = exports.listService = void 0;
 const db_1 = __importDefault(require("../drizzle/db"));
 const schema_1 = require("../drizzle/schema");
 const drizzle_orm_1 = require("drizzle-orm");
+const listService = async (limit) => {
+    if (limit) {
+        return await db_1.default.query.category.findMany({
+            limit: limit
+        });
+    }
+    return await db_1.default.query.category.findMany();
+};
+exports.listService = listService;
 async function getCategoryService(id) {
     return db_1.default.select().from(schema_1.category).where((0, drizzle_orm_1.eq)(schema_1.category.id, id));
 }

@@ -7,16 +7,17 @@ const zod_validator_1 = require("@hono/zod-validator");
 const validator_1 = require("../validator");
 const auth_1 = require("../middleware/auth");
 exports.menuItemRouter = new hono_1.Hono();
-exports.menuItemRouter.use('*', auth_1.authenticateAdmin);
+//list all
+exports.menuItemRouter.get('/list-menu-items', auth_1.authenticateBoth, menu_controller_1.listUsers);
 // Get a single MenuItem
-exports.menuItemRouter.get("/menu_items/:id", auth_1.authenticateUser, menu_controller_1.getMenuItem);
+exports.menuItemRouter.get("/menu-item/:id", auth_1.authenticateBoth, menu_controller_1.getMenuItem);
 // Create a MenuItem
-exports.menuItemRouter.post("/menu_items", (0, zod_validator_1.zValidator)("json", validator_1.menu_itemSchema, (result, c) => {
+exports.menuItemRouter.post("/create-menu-items", (0, zod_validator_1.zValidator)("json", validator_1.menu_itemSchema, (result, c) => {
     if (!result.success) {
         return c.json(result.error, 400);
     }
-}), menu_controller_1.createMenuItem);
+}), auth_1.authenticateAdmin, menu_controller_1.createMenuItem);
 // Update a MenuItem
-exports.menuItemRouter.put("/menu_items/:id", menu_controller_1.updateMenuItem);
+exports.menuItemRouter.put("/update-menu-items/:id", auth_1.authenticateAdmin, menu_controller_1.updateMenuItem);
 // Delete a MenuItem
-exports.menuItemRouter.delete("/menu_items/:id", menu_controller_1.deleteMenuItem);
+exports.menuItemRouter.delete("/delete-menu-items/:id", auth_1.authenticateAdmin, menu_controller_1.deleteMenuItem);

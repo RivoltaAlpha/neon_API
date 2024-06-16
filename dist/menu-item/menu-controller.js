@@ -1,7 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteMenuItem = exports.updateMenuItem = exports.createMenuItem = exports.getMenuItem = void 0;
+exports.deleteMenuItem = exports.updateMenuItem = exports.createMenuItem = exports.getMenuItem = exports.listUsers = void 0;
 const menu_service_1 = require("./menu-service");
+//get all
+const listUsers = async (c) => {
+    try {
+        //limit the number of users to be returned
+        const limit = Number(c.req.query('limit'));
+        const data = await (0, menu_service_1.listService)(limit);
+        if (data == null || data.length == 0) {
+            return c.text("User not found", 404);
+        }
+        return c.json(data, 200);
+    }
+    catch (error) {
+        return c.json({ error: error?.message }, 400);
+    }
+};
+exports.listUsers = listUsers;
 // Get MenuItem
 const getMenuItem = async (c) => {
     try {

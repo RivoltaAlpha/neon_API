@@ -1,7 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteRestaurant = exports.updateRestaurant = exports.createRestaurant = exports.getRestaurant = void 0;
+exports.getRestaurantDetailsController = exports.deleteRestaurant = exports.updateRestaurant = exports.createRestaurant = exports.getRestaurant = exports.listRestaurants = void 0;
 const restaurant_services_1 = require("./restaurant.services");
+//search all 
+const listRestaurants = async (c) => {
+    try {
+        //limit the number of users to be returned
+        const limit = Number(c.req.query('limit'));
+        const data = await (0, restaurant_services_1.restaurantService)(limit);
+        if (data == null || data.length == 0) {
+            return c.text("User not found", 404);
+        }
+        return c.json(data, 200);
+    }
+    catch (error) {
+        return c.json({ error: error?.message }, 400);
+    }
+};
+exports.listRestaurants = listRestaurants;
 // Search restaurant
 const getRestaurant = async (c) => {
     const id = parseInt(c.req.param("id"));
@@ -72,3 +88,19 @@ const deleteRestaurant = async (c) => {
     }
 };
 exports.deleteRestaurant = deleteRestaurant;
+const getRestaurantDetailsController = async (c) => {
+    try {
+        const id = parseInt(c.req.param("id"));
+        if (isNaN(id))
+            return c.text("Invalid ID", 400);
+        const restaurantDetails = await (0, restaurant_services_1.getRestaurantDetailsService)(id);
+        if (!restaurantDetails) {
+            return c.text("Restaurant not found", 404);
+        }
+        return c.json(restaurantDetails, 200);
+    }
+    catch (error) {
+        return c.json({ error: error?.message }, 500);
+    }
+};
+exports.getRestaurantDetailsController = getRestaurantDetailsController;
